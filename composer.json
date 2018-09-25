@@ -1,0 +1,27 @@
+{
+    "name": "hametuha/sharee",
+    "description": "Library to share revenue to users.",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Hametuha INC",
+            "email": "info@hametuha.co.jp"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.5.0",
+        "hametuha/pattern": "^0.8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.8",
+        "squizlabs/php_codesniffer": "~2.8",
+        "wp-coding-standards/wpcs": "~0.11"
+    },
+    "autoload": {
+        "psr-0": {
+            "Hametuha\\Share": "app/"
+        }
+    }
+}
