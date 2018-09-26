@@ -18,23 +18,25 @@ class Sharee extends Singleton {
 	 */
 	protected function init() {
 		$this->load_text_domain();
-		foreach ( [ 'Hooks', 'Models', 'Rest' ] as $dir ) {
-			$path = __DIR__ . '/' . $dir;
-			if ( ! is_dir( $dir ) ) {
+		foreach ( [ 'Hooks', 'Models', 'Rest', 'Screen' ] as $dir ) {
+			$path = __DIR__ . '/Sharee/' . $dir;
+			if ( ! is_dir( $path ) ) {
 				continue;
 			}
-			foreach ( scandir( $dir ) as $file ) {
+			foreach ( scandir( $path ) as $file ) {
 				if ( ! preg_match( '#^([^._].*)\.php$#u', $file, $match ) ) {
 					continue;
 				}
-				$class_name = "Hametuha\\Share\\{$dir}\\{$match[1]}";
+				$class_name = "Hametuha\\Sharee\\{$dir}\\{$match[1]}";
 				if ( ! class_exists( $class_name ) ) {
+					continue;
+				}
+				if ( ! apply_filters( 'sharee_default_initialize', true, $class_name ) ) {
 					continue;
 				}
 				call_user_func( [ $class_name, 'get_instance' ] );
 			}
 		}
-		die( '終了〜' );
 	}
 
 
@@ -46,7 +48,7 @@ class Sharee extends Singleton {
 	 */
 	public function load_text_domain() {
 		$mo = sprintf( 'sharee-%s.mo', get_user_locale() );
-		return load_textdomain( 'sharee', self::dir() . '/languages/' . $mo );
+		return load_textdomain( 'sharee', $this->root_dir . '/languages/' . $mo );
 	}
 
 	/**
