@@ -3,6 +3,7 @@
 namespace Hametuha\Sharee\Table;
 
 use Hametuha\Sharee\Models\RevenueModel;
+use Hametuha\Sharee\Utilities\TableHelper;
 
 /**
  * Class RevenueListTable
@@ -11,6 +12,14 @@ use Hametuha\Sharee\Models\RevenueModel;
  */
 class RewardListTable extends \WP_List_Table {
 
+    use TableHelper;
+
+	/**
+     * Get table summary.
+     *
+	 * @var null
+	 */
+    public $summary = null;
 
 
 	function __construct() {
@@ -29,7 +38,7 @@ class RewardListTable extends \WP_List_Table {
 	public function get_columns() {
 		return [
 			'label'  => __( 'Label', 'sharee' ),
-			'price'  => __( 'Revenue', 'sharee' ),
+			'price'  => __( 'Sales', 'sharee' ),
 			'total'  => __( 'Subtotal', 'sharee' ),
 			'status' => __( 'Status', 'sharee' ),
 			'date'   => __( 'Date', 'sharee' ),
@@ -47,23 +56,23 @@ class RewardListTable extends \WP_List_Table {
 			$this->get_sortable_columns(),
 		];
 		// Search revenues.
-		$status = filter_input( INPUT_GET, 'status' ) ?: 'all';
-		if ( 'all' === $status ) {
-		    $status = '';
-        }
+		list( $status, $year, $monthnum, $type, $page_num ) = $this->get_current_properties();
         $model  = RevenueModel::get_instance();
-		$this->items = $model->search( [
-			'year'     => filter_input( INPUT_GET, 'year' ) ?: date_i18n( 'Y' ),
-			'month'    => filter_input( INPUT_GET, 'monthnum' ) ?: date_i18n( 'n' ),
-			'status'   => $status,
-			'type'     => filter_input( INPUT_GET, 'type' ) ?: null,
-			'per_page' => 20,
-			'page'     => max( 0, $this->get_pagenum() - 1 ),
-		] );
+		$search_args = [
+			'year'      => $year,
+			'month'     => $monthnum,
+			'object_id' => (int) filter_input( INPUT_GET, 'object_id' ),
+			'status'    => $status,
+			'type'      => $type,
+			'per_page'  => 20,
+			'page'      => $page_num,
+        ];
+		$this->items = $model->search( $search_args );
 		$this->set_pagination_args( [
 			'total_items' => $model->found_rows(),
 			'per_page'    => 20,
 		] );
+		$this->summary = $model->search( $search_args, true );
 	}
 
 	/**
@@ -150,9 +159,7 @@ class RewardListTable extends \WP_List_Table {
 			return;
 		}
 		$model = RevenueModel::get_instance();
-		$year   = filter_input( INPUT_GET, 'year' ) ?: date_i18n( 'Y' );
-		$month  = filter_input( INPUT_GET, 'monthnum' ) ?: date_i18n( 'n' );
-		$status = filter_input( INPUT_GET, 'status' ) ?: 'all';
+		list( $status, $year, $month, $type, $page_num ) = $this->get_current_properties();
 		?>
 		<select name="status">
             <option value="all" <?php selected( 'all', $status ) ?>><?php esc_html_e( 'All Status', 'sharee' ) ?></option>
@@ -162,20 +169,17 @@ class RewardListTable extends \WP_List_Table {
 				</option>
 			<?php endforeach; ?>
 		</select>
-		<select name="year">
-			<?php foreach ( $model->available_years() as $i ) : ?>
-				<option value="<?= $i ?>"<?php selected( $i == $year ) ?>><?= sprintf( _x( '%04d', 'year', 'sharee' ), $i ) ?></option>
-			<?php endforeach; ?>
-		</select>
-		<select name="monthnum">
-			<?php for ( $i = 1; $i <= 12; $i ++ ) : ?>
-				<option value="<?= $i ?>"<?php selected( $i == $month ) ?>>
-                    <?= mysql2date( 'M', sprintf( '%04d-%02d-01', date_i18n( 'Y' ), $i ) ) ?>
-                </option>
-			<?php endfor; ?>
-		</select>
-		<input type="submit" class="button" value="<?php esc_attr_e( 'Filter', 'sharee' ) ?>" />
+		<?php $this->filter_inputs() ?>
 		<?php
 	}
+
+	/**
+     * Returns total record count.
+     *
+	 * @return int
+	 */
+	public function total_record() {
+	    return (int) $this->_pagination_args['total_items'];
+    }
 
 }

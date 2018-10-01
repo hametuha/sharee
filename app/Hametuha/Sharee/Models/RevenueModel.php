@@ -95,6 +95,16 @@ SQL;
 	}
 
 	/**
+	 * Get revenue type to be billed.
+	 *
+	 * @return array
+	 */
+	public function type_to_be_billed() {
+		$types = array_keys( $this->get_labels() );
+		return (array) apply_filters( 'sharee_type_to_be_billed', $types );
+	}
+
+	/**
 	 * Get labels
 	 *
 	 * @return array
@@ -256,7 +266,7 @@ SQL;
 	public function add_revenue( $type, $object_id, $price, $args = [] ) {
 		$args = wp_parse_args( $args, [
 			'revenue_type' => $type,
-			'object_id'    => $type,
+			'object_id'    => $object_id,
 			'price'        => $price,
 			'total'        => $price,
 			'unit'         => 1,
@@ -273,16 +283,18 @@ SQL;
 	 * Search
 	 *
 	 * @param array $args
-	 * @return array
+	 * @param bool  $total Default false. If true, calculate total.
+	 * @return array|\stdClass
 	 */
-	public function search( $args ) {
+	public function search( $args, $total = false ) {
 		$args = wp_parse_args( $args, [
-			'year'     => 0,
-			'month'    => 0,
-			'page'     => 1,
-			'per_page' => 20,
-			'status'   => null,
-			'type'     => [],
+			'year'      => 0,
+			'month'     => 0,
+			'page'      => 1,
+			'object_id' => 0,
+			'per_page'  => 20,
+			'status'    => null,
+			'type'      => [],
 		] );
 		// Build where flags.
 		$wheres = [];
@@ -294,26 +306,186 @@ SQL;
 				return $this->db->prepare( '%s', $t );
 			}, $type ) ) );
 		}
+		if ( $args['object_id'] ) {
+			$wheres[] = $this->db->prepare( '( object_id = %d )', $args['object_id'] );
+		}
 		if ( is_numeric( $args['status'] ) ) {
 			$wheres[] = $this->db->prepare( '( `status` = %d )', $args['status'] );
 		}
-		if ( $args['year'] && $args['month']) {
-			$wheres[] = sprintf( '( EXTRACT(YEAR_MONTH from `created`) = %04d%02d )', $args['year'], $args['month'] );
-		} elseif ( $args['year'] ) {
-			$wheres[] = sprintf( '( EXTRACT(YEAR from `created`) = %04d )', $args['year'] );
-		} elseif ( $args['month'] ) {
-			$wheres[] = sprintf( '( EXTRACT(MONTH from `created`) = %02d )', $args['month'] );
+		$year  = (int) $args['year'];
+		$month = (int) $args['month'];
+		if ( $year && $month ) {
+			$wheres[] = sprintf( '( EXTRACT(YEAR_MONTH from `created`) = %04d%02d )', $year, $month );
+		} elseif ( $year ) {
+			$wheres[] = sprintf( '( EXTRACT(YEAR from `created`) = %04d )', $year );
+		} elseif ( $month ) {
+			$wheres[] = sprintf( '( EXTRACT(MONTH from `created`) = %02d )', $month );
 		}
 		$where = $wheres ? 'WHERE ' . implode( ' AND ', $wheres ) : '';
-		$query = <<<SQL
+		if ( ! $total ) {
+			$query = <<<SQL
 			SELECT SQL_CALC_FOUND_ROWS * FROM {$this->table}
 			{$where}
 			ORDER BY created DESC
 SQL;
-		if ( $args['per_page'] ) {
-			$query .= sprintf( ' LIMIT %d, %d', $args['per_page'] * ( max( 1, $args['page'] ) - 1 ), $args['per_page']  );
+			if ( $args['per_page'] ) {
+				$query .= sprintf( ' LIMIT %d, %d', $args['per_page'] * ( max( 1, $args['page'] ) - 1 ), $args['per_page']  );
+			}
+			return $this->get_results( $query );
+		} else {
+			$query = <<<SQL
+			SELECT
+				AVG(price) AS price,
+				AVG(tax) AS tax,
+				AVG(unit) AS unit,
+				AVG(deducting) AS deducting,
+				AVG(total) AS total,
+				SUM(total) AS total_sum,
+			  	SUM(unit)  AS unit_sum
+			FROM {$this->table}
+			{$where}
+SQL;
+			return $this->get_row( $query );
+
 		}
+	}
+
+	/**
+	 * Get billing list to be paid.
+	 *
+	 * @param int       $year
+	 * @param int       $month
+	 * @param int|array $user_id
+	 * @param int|null  $status  If null set, no status. Default 0(pending)
+	 *
+	 * @return array
+	 */
+	public function get_billing_list( $year, $month, $user_id = 0, $status = 0 ) {
+		$wheres = $this->get_billing_where( $year, $month, $user_id, $status );
+		$query = <<<SQL
+			SELECT SUM(total) AS total, object_id, SUM(deducting) AS deducting
+			FROM {$this->table}
+			{$wheres}
+			GROUP BY object_id
+			ORDER BY total DESC
+SQL;
 		return $this->get_results( $query );
+	}
+
+	/**
+	 * Get billing summary
+	 *
+	 * @param int $year
+	 * @param int $month
+	 * @param int $user_id
+	 * @param int $status
+	 * @return \stdClass
+	 */
+	public function get_billing_summary( $year, $month, $user_id = 0, $status = 0 ) {
+		$wheres = $this->get_billing_where( $year, $month, $user_id, $status );
+		$query = <<<SQL
+		SELECT COUNT(revenue_id) AS record_number, SUM(total) AS total, SUM(deducting) AS deducting
+			FROM {$this->table}
+			{$wheres}
+SQL;
+		return $this->get_row( $query );
+	}
+
+	/**
+	 * Get where clause for billing list
+	 *
+	 * @param int       $year
+	 * @param int       $month
+	 * @param int|array $user_id
+	 * @param int       $status
+	 * @param array     $types
+	 * @return string
+	 */
+	protected function get_billing_where( $year, $month, $user_id = 0, $status = 0, $types = [] ) {
+		$wheres = [];
+		if ( $year && $month ) {
+			list( $start, $end ) = $this->get_month_range( $year, $month );
+			$wheres[] = $this->db->prepare( '( created BETWEEN %s AND %s )', $start, $end );
+		} elseif ( $year ) {
+			$wheres[] = $this->db->prepare( '( EXTRACT(YEAR FROM created) = %d )', $year );
+		} elseif ( $month ) {
+			$wheres[] = $this->db->prepare( '( EXTRACT(MONTH FROM created) = %d )', $month );
+		}
+		if ( is_numeric( $status ) ) {
+			$wheres[] = $this->db->prepare( '( status = %d )', $status );
+		}
+		if ( $types ) {
+			$wheres[] = sprintf( '( revenue_type IN ( %s ) )', implode( ', ', array_map( function( $type ) {
+				return $this->db->prepare( '%s', $type );
+			}, $types ) ) );
+		}
+		if ( $user_id ) {
+			if ( is_array( $user_id ) ) {
+				$user_ids = array_filter( array_map( 'intval', $user_id ) );
+				if ( $user_ids ) {
+					$wheres[] = sprintf( '( object_id IN ( %s ) )', implode( ', ', $user_ids ) );
+				}
+			} else {
+				$wheres[] = $this->db->prepare( '( object_id = %d )', $user_id );
+			}
+		}
+		if ( $wheres ) {
+			$wheres = 'WHERE ' . implode( ' AND ', $wheres );
+		} else {
+			$wheres = '';
+		}
+		return $wheres;
+	}
+
+	/**
+	 * Update record to be billed.
+	 *
+	 * @param array $object_ids
+	 * @param int   $year
+	 * @param int   $month
+	 * @param array $type
+	 * @return int
+	 */
+	public function fix_billing( $object_ids, $type = [], $year = 0, $month = 0 ) {
+		$object_ids = array_filter( array_map( 'intval', (array) $object_ids ) );
+		if ( ! $object_ids ) {
+			return 0;
+		}
+		$wheres = $this->get_billing_where( $year, $month, $object_ids, 0, $type );
+		$query = <<<SQL
+			SELECT revenue_id, object_id FROM {$this->table}
+			{$wheres}
+SQL;
+		$current_records = $this->get_results( $query );
+		if ( ! $current_records ) {
+			return 0;
+		}
+		$revenue_ids = [];
+		$user_ids    = [];
+		foreach ( $current_records as $row ) {
+			$revenue_ids[] = $row->revenue_id;
+			if ( ! in_array( $row->object_id, $user_ids ) ) {
+				$user_ids[] = $row->object_id;
+			}
+		}
+		$update_query = <<<SQL
+			UPDATE {$this->table}
+			SET status=1, fixed=%s, updated=%s
+			{$wheres}
+SQL;
+		$now = current_time( 'mysql', $this->use_gmt() );
+		$updated = $this->db->query( $this->db->prepare( $update_query, $now, $now ) );
+		if ( count( $revenue_ids ) === $updated ) {
+			$this->revenue_meta->bulk_insert( array_map( function( $revenue_id ) {
+				return [
+					'key'        => 'billing_method',
+					'revenue_id' => $revenue_id,
+					'value'      => 'bank',
+				];
+			}, $revenue_ids ) );
+		}
+		do_action( 'sharee_revenue_transfered', $user_ids );
+		return $updated;
 	}
 
 	/**
@@ -337,7 +509,7 @@ SQL;
 	 * @return string
 	 */
 	public function format( $price ) {
-		return sprintf( '&yen; %s', number_format( $price ) );
+		return apply_filters( 'sharee_price_formatting', sprintf( '&yen; %s', number_format( $price ) ), $price );
 	}
 
 
