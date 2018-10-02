@@ -54,6 +54,7 @@ class BillingList extends TableScreen {
             'endpoint'     => admin_url( 'admin-ajax.php' ),
             'nonce'        => wp_create_nonce( 'user-billing' ),
             'defaultError' => __( 'Something is wrong on server. Please try again later.', 'sharee' ),
+            'transferDate' => sprintf( __( 'Please specify transfer date in 4 digits: e.g. %s' ), date_i18n( 'md' ) ),
         ] );
 	}
 
@@ -111,20 +112,25 @@ class BillingList extends TableScreen {
 			if ( ! $list ) {
 				throw new \Exception( __( 'No billing found.', 'sharee' ), 404 );
             }
+            $date = filter_input( INPUT_POST, 'date' );
+			if ( ! preg_match( '#\d{4}#u', $date ) ) {
+				throw new \Exception( sprintf( __( 'Please specify transfer date in 4 digits: e.g. %s', 'sharee' ), date_i18n( 'md' ) ), 404 );
+            }
 			header("Content-Type: application/octet-stream");
 			header( sprintf( "Content-Disposition: attachment; filename=billing-%s.csv", date_i18n( 'YmdHis' ) ) );
 			header("Content-Transfer-Encoding: binary");
             $f = fopen( 'php://output', 'w' );
             foreach ( $list as $line ) {
+                $account = new Sharee\Master\Account( $line->object_id );
                 fputcsv( $f, [
                     3, // Service.
-					// Date.
-					// Bank Number.
-					// Branch Number.
-					// Account Type.
-					// Account Number.
-                    // Name.
-                    $line->total, // Total amount.
+					$date, // Date.
+					$account->get_value( 'group_code' ), // Bank Number.
+					$account->get_value( 'branch_code' ), // Branch Number.
+					$account->get_value( 'type' ), // Account Type.
+					$account->get_value( 'number' ), // Account Number.
+                    $account->get_value( 'name' ), // Name.
+                    ceil( $line->total ), // Total amount.
                     $line->object_id, // User ID.
                 ] );
             }
@@ -196,6 +202,7 @@ HTML;
                 <?php wp_nonce_field( 'user-billing' ) ?>
                 <input type="hidden" name="year" value="">
                 <input type="hidden" name="month" value="">
+                <input type="hidden" name="date" value="" />
                 <p></p>
             </form>
             <iframe id="sahree-csv-downloader" name="sharee-csv-downloader"></iframe>

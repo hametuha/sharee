@@ -61,6 +61,27 @@ class Address extends MetaMaster {
 	}
 
 	/**
+	 * Get formatted line
+	 *
+	 * @return string
+	 */
+	public function format_line() {
+		$line = [];
+		foreach ( [ 'zip', 'address', 'address2' ] as $key ) {
+			$value = $this->get_value( $key );
+			switch ( $key ) {
+				case 'zip':
+					$line[] = sprintf( '〒%s', $value );
+					break;
+				default:
+					$line[] = $value;
+					break;
+			}
+		}
+		return implode( ' ', array_filter( $line ) );
+	}
+
+	/**
 	 * Check if object if valid.
 	 *
 	 * @return bool

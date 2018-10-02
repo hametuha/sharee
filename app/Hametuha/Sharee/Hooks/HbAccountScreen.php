@@ -3,7 +3,10 @@
 namespace Hametuha\Sharee\Hooks;
 
 
+use Hametuha\Hashboard;
 use Hametuha\Pattern\Singleton;
+use Hametuha\Sharee;
+use Hametuha\Sharee\Master\Account;
 use Hametuha\Sharee\Master\Address;
 
 /**
@@ -21,7 +24,7 @@ class HbAccountScreen extends Singleton {
 		add_filter( 'hashboard_page_description', [ $this, 'billing_description' ], 10, 3 );
 		add_action( 'hashboard_before_fields_rendered', [ $this, 'render_status_fields' ], 10, 3 );
 		add_filter( 'hashboard_field_groups', [ $this, 'field_groups' ], 10, 4 );
-
+		add_action( 'hashboard_enqueue_scripts', [ $this, 'enqueue_scripts' ], 10, 2 );
 	}
 
 	/**
@@ -54,6 +57,33 @@ class HbAccountScreen extends Singleton {
 	}
 
 	/**
+	 * Enqueue scripts
+     *
+	 * @param \Hametuha\Hashboard\Pattern\Screen $screen
+	 * @param string $child
+	 */
+	public function enqueue_scripts( $screen = null, $child = '' ) {
+	    if ( ! ( $screen && 'account' === $screen->slug() && 'billing' === $child ) ) {
+	        return;
+        }
+
+        $api_key  = defined( 'SHAREE_BANK_API_KEY' ) ? SHAREE_BANK_API_KEY : '';
+	    $yolp_key = defined( 'YOLP_API_KEY' ) ? YOLP_API_KEY : '';
+
+	    $base_url = Sharee::get_instance()->root_url;
+	    wp_register_style( 'select2', $base_url . '/assets/css/select2.min.css', [], '4.0.6' );
+        wp_enqueue_style( 'select2', $base_url . '/assets/css/select2-bootstrap4.min.css', [ 'bootstrap-css', 'select2' ], '1.0.0' );
+        wp_register_script( 'select2', $base_url . '/assets/js/select2.min.js', ['jquery'], '4.0.6', true );
+        wp_enqueue_script( 'sharee-bank-helper', $base_url . '/assets/js/bank-helper.js', ['select2'], '1.0.0', true );
+        wp_localize_script( 'sharee-bank-helper', 'BankHelper', [
+            'apiKey'       => apply_filters( 'sharee_bank_api_key', $api_key ),
+            'yolpKey'      => apply_filters( 'sharee_yolp_api_key', $yolp_key ),
+            'yolpError'    => __( 'Sorry, but no result found.', 'sharee' ),
+            'noBranchCode' => __( 'Bank is not specified.', 'sharee' ),
+        ] );
+    }
+
+	/**
 	 * Display status field before billing info.
 	 *
 	 * @param string $slug
@@ -64,7 +94,6 @@ class HbAccountScreen extends Singleton {
 		if ( 'account' !== $slug || 'billing' !== $page ) {
 			return;
 		}
-		wp_enqueue_script( 'hametuha-hb-status-holder' );
 		switch ( $field_name ) {
 			case 'billing':
 				$endpoint = rest_url( 'sharee/v1/bank/me' );
@@ -97,57 +126,92 @@ class HbAccountScreen extends Singleton {
 			return $args;
 		}
 		//
-		// 銀行口座
+		// Bank Account
 		//
 		$billing_fields = [
-			'label'       => '振込先',
-			'description' => '入金先情報を入力してください。 東京三菱UFJ銀行だと振り込み手数料が安くなるので、破滅派的に助かります。',
-			'submit'      => '保存',
-			'action'      => rest_url( '/hametuha/v1/user/billing/bank' ),
+			'label'       => __( 'Bank Account', 'sharee' ),
+			'description' => apply_filters( 'sharee_bank_account_desc', __( 'Bank account is required to be rewarded. Only available for Japan.', 'sharee' ) ),
+			'submit'      => __( 'Save', 'sharee' ),
+			'action'      => rest_url( 'sharee/v1/bank/me' ),
 			'method'      => 'POST',
 			'fields'      => [],
 		];
-		foreach ( hametuha_bank_account( $user->ID ) as $key => $value ) {
-			$label = '';
+		$account = new Account( $user->ID );
+		foreach ( Account::settings() as $key => $data ) {
+			$label       = $data['label'];
 			$placeholder = '';
-			$options = [];
-			$row = '';
-			$type = 'text';
+			$options     = [];
+			$description = '';
+			$row         = '';
+			$type        = 'text';
+			$col         = 1;
+			$optional    = false;
+			$value       = $account->get_value( $key );
 			$default = '';
 			switch ( $key ) {
 				case 'group':
-					$label = '銀行名';
+				    $col = 1.5;
 					$row = 'open';
+					$type = 'select';
+					if ( $value ) {
+					    $options = [
+                            $value => $value,
+                        ];
+                    }
+                    $description = __( 'Type and search your bank. Bank code will be automatically input if you found your bank.', 'sharee' );
 					break;
-				case 'branch':
-					$label = '支店名';
+                case 'group_code':
+                    $col = 3;
 					$row = 'close';
+					$type = 'number';
+                    break;
+				case 'branch':
+					$col = 1.5;
+					$row = 'open';
+					$type = 'select';
+					if ( $value ) {
+						$options = [
+							$value => $value,
+						];
+					}
+					$description = __( 'Once you select a bank, you can search it\'s branches.', 'sharee' );
+					break;
+                case 'branch_code':
+					$col = 3;
+					$row = 'close';
+					$type = 'number';
 					break;
 				case 'type':
-					$label = '口座種別';
 					$type = 'select';
+					$row = 'open';
+					$col = 3;
 					$options = [
-						'普通' => '普通',
-						'当座' => '当座',
+						'1' => _x( 'Saving', 'bank_type', 'sharee' ),
+						'2' => _x( 'Checking', 'bank_type', 'sharee' ),
+                        '4' => _x( 'Deposite', 'bank_type', 'sharee' ),
 					];
-					$default = '普通';
+					$default = '1';
 					$row = 'open';
 					break;
 				case 'number':
 					$label = '口座番号';
+					$col = 1.5;
 					$row = 'close';
+					$type = 'number';
 					break;
 				case 'name':
-					$label = '口座名義';
+					$label = __( 'Account Name', 'sharee' );
 					break;
 			}
 			$field = [
+                'name' => $key,
 				'type' => $type,
 				'label' => $label,
 				'value' => $value,
 				'placeholder' => $placeholder,
 				'group' => $row,
-				'col' => $row ? 2 : 1,
+				'col' => $col,
+                'description' => $description,
 			];
 			if ( $options ) {
 				$field['options'] = $options;
@@ -160,7 +224,7 @@ class HbAccountScreen extends Singleton {
 
 
 		//
-		// 請求先
+		// Billing Information
 		//
 		$address_fields = [
 			'label'       => __( 'Billing Information', 'sharee' ),
@@ -179,6 +243,7 @@ class HbAccountScreen extends Singleton {
 			$type        = 'text';
 			$col         = 1;
 			$optional    = false;
+			$description = '';
 			switch ( $key ) {
 				case 'name':
 				    $placeholder = __( 'e.g. John Doe', 'sharee' );
@@ -203,7 +268,6 @@ class HbAccountScreen extends Singleton {
                     break;
                 case 'country':
                     $should_display_company = apply_filters( 'sharee_require_country', false );
-                    var_dump( $should_display_company );
                     if ( ! $should_display_company ) {
                         continue 2;
                     }
@@ -211,6 +275,7 @@ class HbAccountScreen extends Singleton {
 				case 'zip':
 					$row = 'close';
 					$placeholder = 'e.g. 107-0062';
+					$description = sprintf( '<a href="#" id="sharee-zip-search">%s</a>', __( 'Enter address from zip code.', 'sharee' ) );
 					$col = 2;
 					break;
 			}
@@ -223,6 +288,7 @@ class HbAccountScreen extends Singleton {
                 'type'        => $type,
 				'col'         => $col,
                 'optional'    => $optional,
+                'description' => $description,
 			];
 			$address_fields['fields'][ '_billing_'. $key ] = $field;
 		}

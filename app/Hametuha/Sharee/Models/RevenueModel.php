@@ -489,6 +489,93 @@ SQL;
 	}
 
 	/**
+	 * Get fixed billing in month.
+	 *
+	 * @param int $year
+	 * @param int $month
+	 * @param array $types
+	 * @return array
+	 */
+	public function get_fixed_billing( $year, $month, $types = [] ) {
+		$wheres = [
+			$this->db->prepare( '( EXTRACT(YEAR_MONTH FROM fixed) = %d )', sprintf( '%04d%02d', $year, $month ) ),
+			'( status = 1 )'
+		];
+		if ( $types ) {
+			$wheres[] = sprintf( '( revenue_type IN (%s) )', implode( ', ', array_map( function( $type ) {
+				return $this->db->prepare( '%s', $type );
+			}, $types ) ) );
+		}
+		$wheres = 'WHERE ' . implode( ' AND ', $wheres );
+		$query = <<<SQL
+			SELECT
+				SUM( price * unit ) AS before_tax,
+				SUM(tax) AS tax,
+				SUM(deducting) AS deducting,
+				SUM(total) AS total,
+				object_id,
+				`fixed`
+			FROM {$this->table}
+			{$wheres}
+			GROUP BY object_id
+			ORDER BY object_id DESC
+SQL;
+		return $this->get_results( $query );
+	}
+
+	/**
+	 * Get list of my number.
+	 *
+	 * @param int $year Year
+	 *
+	 * @return array
+	 */
+	public function get_my_numbers( $year ) {
+		$users = $this->select( 'u.*, SUM( s.total ) AS amount' )
+			->from( "{$this->db->users} AS u" )
+			->join( "{$this->table} AS s", 'u.ID = s.user_id' )
+			->wheres( [
+				'EXTRACT( YEAR FROM s.fixed ) = %d' => $year,
+			] )
+			->group_by( 'u.ID' )
+			->result();
+		$user_ids = [];
+		foreach ( $users as $user ) {
+			$user_ids[] = $user->ID;
+		}
+		// Get user meta
+		$metas = $this->select( '*' )
+			->from( $this->db->usermeta )
+			->where_in( 'user_id', $user_ids, '%d' )
+			->where_in( 'meta_key', [ '_billing_name', '_billing_number', '_billing_address' ] )
+			->result();
+		return array_map( function( $user ) use ( $metas ) {
+			$user->my_number = '';
+			$user->address   = '';
+			foreach ( $metas as $row ) {
+				if ( $row->user_id != $user->ID ) {
+					continue;
+				}
+				switch ( $row->meta_key ) {
+					case '_billing_name';
+						$user->display_name = $row->meta_value;
+						break;
+					case '_billing_number':
+						$user->my_number = $row->meta_value;
+						break;
+					case '_billing_address':
+						$user->address = $row->meta_value;
+						break;
+					default:
+						// Do nothing.
+						break;
+				}
+			}
+			return $user;
+		}, $users );
+	}
+
+	/**
 	 * Get availalble years.
 	 */
 	public function available_years() {

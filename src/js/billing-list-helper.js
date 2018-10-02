@@ -44,9 +44,17 @@
           });
           break;
         case 'download':
+          const dateObj = new Date();
+          const date = window.prompt( ShareeBilling.transferDate,  [ dateObj.getMonth() + 1,  dateObj.getDate() ].map( function( num ) {
+            return ( '0' + num ).slice( -2 );
+          }).join( '' ) );
+          if ( ! date ) {
+            return;
+          }
           const $form = $( 'form[target="sharee-csv-downloader"]' );
           $form.find( 'input[name="year"]' ).val( $( 'select[name="year"]' ).val() );
           $form.find( 'input[name="month"]' ).val( $( 'select[name="monthnum"]' ).val() );
+          $form.find( 'input[name="date"]' ).val( date );
           $form.find( 'p' ).empty();
           ids.forEach( ( id, index )=>{
             $form.find( 'p' ).append( `<input type="checkbox" name="user_ids[]" value="${id}" checked />` );

@@ -1,6 +1,7 @@
 var gulp        = require('gulp'),
     fs          = require('fs'),
     $           = require('gulp-load-plugins')(),
+    stream      = require('event-stream'),
     pngquant    = require('imagemin-pngquant');
 
 
@@ -59,6 +60,15 @@ gulp.task('eslint', function () {
 
 // Build modernizr
 gulp.task('copylib', function () {
+  return stream.merge(
+    gulp.src([
+      'node_modules/select2-bootstrap4-theme/dist/select2-bootstrap4.min.css',
+      'node_modules/select2/dist/css/select2.min.css',
+    ])
+      .pipe(gulp.dest('assets/css')),
+    gulp.src('node_modules/select2/dist/js/select2.min.js')
+      .pipe(gulp.dest('assets/js'))
+  );
 });
 
 // Image min

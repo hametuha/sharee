@@ -2,6 +2,8 @@
 
 namespace Hametuha\Sharee\Table;
 
+use Hametuha\Sharee\Master\Account;
+use Hametuha\Sharee\Master\Address;
 use Hametuha\Sharee\Models\RevenueModel;
 use Hametuha\Sharee\Utilities\TableHelper;
 use Hametuha\Sharee\Service\Bank;
@@ -114,7 +116,8 @@ class BillingListTable extends \WP_List_Table {
 	public function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
 			case 'payable':
-				if ( Bank::is_ready( $item->object_id ) && Bank::billing_ready( $item->object_id ) ) {
+				$billing = new Address( $item->object_id );
+				if ( $billing->validate() ) {
 					$color = 'green';
 					$icon = 'yes';
 				} else {
@@ -132,8 +135,9 @@ class BillingListTable extends \WP_List_Table {
 				}
 				break;
 			case 'account':
-				if ( Bank::is_ready( $item->object_id ) ) {
-					echo esc_html( implode( ' ', Bank::get_account( $item->object_id ) ) );
+				$account = new Account( $item->object_id );
+				if ( $account->validate() ) {
+					echo esc_html( $account->format_line() );
 				} else {
 					echo '<span style="color: lightgrey">---</span>';
 				}
