@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Hametuha\\Share": "app/"
+            "Hametuha\\Sharee": "app/"
         }
     }
 }
