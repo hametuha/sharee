@@ -274,6 +274,7 @@ SQL;
 			'deducting'    => 0,
 			'description'  => '',
 			'status'       => 0,
+			'created'      => current_time( 'mysql', $this->use_gmt() ),
 		] );
 		// Save revenue.
 		return $this->insert( $args );
@@ -519,6 +520,38 @@ SQL;
 			{$wheres}
 			GROUP BY object_id
 			ORDER BY object_id DESC
+SQL;
+		return $this->get_results( $query );
+	}
+
+	/**
+	 * Get payment result
+	 *
+	 * @param int $year
+	 * @param int $user_id
+	 * @return array
+	 */
+	public function get_payment_list( $year, $user_id = 0 ) {
+		$wheres = [];
+		if ( $user_id ) {
+			$wheres[] = sprintf( '(r.object_id = %d)', $user_id );
+		}
+		$wheres[] = '( r.status = 1 )';
+		$wheres[] = sprintf( '( EXTRACT(YEAR from r.fixed) = %04d )', $year );
+		$wheres = ' WHERE ' . implode( ' AND ', $wheres );
+		$query = <<<SQL
+			SELECT
+				SUM(r.total) AS total,
+				SUM(r.deducting) AS deducting,
+				r.object_id AS user_id,
+				u.display_name,
+				fixed
+			FROM {$this->table} AS r
+			LEFT JOIN {$this->db->users} AS u
+			ON u.ID = r.object_id
+			{$wheres}
+			group by r.object_id, r.fixed
+			ORDER BY r.fixed
 SQL;
 		return $this->get_results( $query );
 	}

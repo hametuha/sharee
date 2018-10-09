@@ -201,6 +201,7 @@ class HbAccountScreen extends Singleton {
 					break;
 				case 'name':
 					$label = __( 'Account Name', 'sharee' );
+					$description = __( 'Please write your name in Katakana.', 'sharee' );
 					break;
 			}
 			$field = [
