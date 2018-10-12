@@ -104,7 +104,7 @@ class RewardListTable extends \WP_List_Table {
                         $link  = add_query_arg( [ 'user_id' => $item->object_id ], admin_url( 'user-edit.php' ) );
 					}
                 }
-                $link = apply_filters( 'sharee_list_table_link', $link, $item->object_id, $is_post );
+                $link = apply_filters( 'sharee_list_table_link', $link, $item, $is_post );
                 if ( $link ) {
                     $label = sprintf( '<a href="%s">%s</a>', esc_url( $link ), esc_html( $label ) );
                 } else {
