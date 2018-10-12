@@ -20,7 +20,7 @@ class Sharee extends Singleton {
 	 * Executed in constructor
 	 */
 	protected function init() {
-		$this->load_text_domain();
+		add_action( 'init', [ $this, 'load_text_domain' ], 1 );
 		// Register global assets
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 		// Register autoloader
