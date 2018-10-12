@@ -86,7 +86,7 @@ class RewardListTable extends \WP_List_Table {
 		switch ( $column_name ) {
 			case 'label':
                 $link  = '';
-			    if ( $is_post = $model->is_post_revenue( $item->object_id ) ) {
+			    if ( $is_post = $model->is_post_revenue( $item->revenue_type ) ) {
 			        // This is post.
 			        if ( $post = get_post( $item->object_id ) ) {
 						$label = get_the_title( $post );
