@@ -320,7 +320,7 @@ SQL;
 		}
 		if ( $args['object_id'] ) {
 			if ( is_array( $args['object_id'] ) ) {
-				$wheres[] = sprintf( '( object_id IN %s )', $args[ 'object_id' ] );
+				$wheres[] = sprintf( '( object_id IN ( %s ) )', implode( ',', array_map( 'intval', $args[ 'object_id' ] ) ) );
 			} else {
 				$wheres[] = $this->db->prepare( '( object_id = %d )', $args[ 'object_id' ] );
 			}
