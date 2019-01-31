@@ -82,12 +82,15 @@ SQL;
 	 */
 	public function add_multiple_meta( $revenue_id, $records ) {
 		return $this->bulk_insert( array_map( function( $record ) use ( $revenue_id ) {
-			if ( is_array( $record['value'] ) ) {
-				$record['value'] = serialize( $record['value'] );
+			list( $key, $value ) = $record;
+			if ( is_array( $value ) ) {
+				$value = serialize( $value );
 			}
-			return array_merge( [
+			return [
 				'revenue_id' => $revenue_id,
-			], $record );
+				'key'        => $key,
+				'value'      => $value,
+			];
 		}, $records ) );
 	}
 
