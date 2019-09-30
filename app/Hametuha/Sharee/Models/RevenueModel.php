@@ -16,7 +16,7 @@ use Hametuha\Sharee\Models\RevenueMetaModel;
  */
 class RevenueModel extends Model {
 
-	protected $version = '0.8.0';
+	protected $version = '0.8.1';
 
 	protected $name    = 'revenues';
 
@@ -34,11 +34,31 @@ class RevenueModel extends Model {
 		'created' => '%s',
 		'fixed'   => '%s',
 		'updated' => '%s',
+		'currency' => '%s',
 	];
 
 	protected $models = [
 		'revenue_meta' => RevenueMetaModel::class,
 	];
+
+	/**
+	 * Default search args for search method.
+	 *
+	 * @return array
+	 */
+	public function default_search_args() {
+		return [
+			'year'      => 0,
+			'month'     => 0,
+			'page'      => 1,
+			'object_id' => 0,
+			'per_page'  => 20,
+			'status'    => null,
+			'start'     => '',
+			'end'       => '',
+			'type'      => [],
+		];
+	}
 
 	/**
 	 * Get table query
@@ -62,6 +82,7 @@ class RevenueModel extends Model {
 				`created`      DATETIME NOT NULL,
 				`fixed`        DATETIME NOT NULL,
 				`updated`      DATETIME NOT NULL,
+				`currency`     VARCHAR(45) NOT NULL DEFAULT 'JPY'
 				INDEX  type_user( `revenue_type`, `object_id`, `created` ),
 				INDEX  by_date( `created`, `status` )
 			) ENGINE {$this->engine} DEFAULT CHARSET={$this->charset}
@@ -288,15 +309,7 @@ SQL;
 	 * @return array|\stdClass
 	 */
 	public function search( $args, $total = false ) {
-		$args = wp_parse_args( $args, [
-			'year'      => 0,
-			'month'     => 0,
-			'page'      => 1,
-			'object_id' => 0,
-			'per_page'  => 20,
-			'status'    => null,
-			'type'      => [],
-		] );
+		$args = wp_parse_args( $args, $this->default_search_args() );
 		// Build where flags.
 		$wheres = [];
 		$type = array_filter( (array) $args['type'] );
@@ -308,7 +321,11 @@ SQL;
 			}, $type ) ) );
 		}
 		if ( $args['object_id'] ) {
-			$wheres[] = $this->db->prepare( '( object_id = %d )', $args['object_id'] );
+			if ( is_array( $args['object_id'] ) ) {
+				$wheres[] = sprintf( '( object_id IN ( %s ) )', implode( ',', array_map( 'intval', $args[ 'object_id' ] ) ) );
+			} else {
+				$wheres[] = $this->db->prepare( '( object_id = %d )', $args[ 'object_id' ] );
+			}
 		}
 		if ( is_numeric( $args['status'] ) ) {
 			$wheres[] = $this->db->prepare( '( `status` = %d )', $args['status'] );
@@ -322,6 +339,14 @@ SQL;
 		} elseif ( $month ) {
 			$wheres[] = sprintf( '( EXTRACT(MONTH from `created`) = %02d )', $month );
 		}
+		if ( $args['start'] && $args['end'] ) {
+			$wheres[] = $this->db->prepare( '( `created` BETWEEN %s AND %s )', $args['start'], $args['end'] );
+		} elseif ( $args['start'] ) {
+			$wheres[] = $this->db->prepare( '( `created` >= %s )', $args['start'] );
+		} elseif ( $args['end'] ) {
+			$wheres[] = $this->db->prepare( '( `created` <= %s )', $args['end'] );
+		}
+
 		$where = $wheres ? 'WHERE ' . implode( ' AND ', $wheres ) : '';
 		if ( ! $total ) {
 			$query = <<<SQL
@@ -655,6 +680,4 @@ SQL;
 				break;
 		}
 	}
-
-
 }
