@@ -16,7 +16,7 @@ use Hametuha\Sharee\Models\RevenueMetaModel;
  */
 class RevenueModel extends Model {
 
-	protected $version = '0.8.0';
+	protected $version = '0.8.1';
 
 	protected $name    = 'revenues';
 
@@ -34,6 +34,7 @@ class RevenueModel extends Model {
 		'created' => '%s',
 		'fixed'   => '%s',
 		'updated' => '%s',
+		'currency' => '%s',
 	];
 
 	protected $models = [
@@ -81,6 +82,7 @@ class RevenueModel extends Model {
 				`created`      DATETIME NOT NULL,
 				`fixed`        DATETIME NOT NULL,
 				`updated`      DATETIME NOT NULL,
+				`currency`     VARCHAR(45) NOT NULL DEFAULT 'JPY'
 				INDEX  type_user( `revenue_type`, `object_id`, `created` ),
 				INDEX  by_date( `created`, `status` )
 			) ENGINE {$this->engine} DEFAULT CHARSET={$this->charset}
@@ -678,6 +680,4 @@ SQL;
 				break;
 		}
 	}
-
-
 }
