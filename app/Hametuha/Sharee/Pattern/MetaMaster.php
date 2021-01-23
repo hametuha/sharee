@@ -50,7 +50,7 @@ abstract class MetaMaster implements RestResultObject {
 	/**
 	 * Update meta
 	 */
-	protected function set_meta(){
+	protected function set_meta() {
 		$data = [];
 		foreach ( $this->get_setting() as $key => $label ) {
 			$data[ $key ] = $this->get( $key );
@@ -65,7 +65,7 @@ abstract class MetaMaster implements RestResultObject {
 	 * @return bool
 	 */
 	protected function delete( $key ) {
-		$deleted = (bool) call_user_func_array( $this->call( 'delete' ), [ $this->object->ID, $this->get_meta_key_name( $key ) ] );
+		$deleted            = (bool) call_user_func_array( $this->call( 'delete' ), [ $this->object->ID, $this->get_meta_key_name( $key ) ] );
 		$this->data[ $key ] = '';
 		return $deleted;
 	}
@@ -76,7 +76,7 @@ abstract class MetaMaster implements RestResultObject {
 	 * @return int
 	 */
 	public function update( $key, $value ) {
-		$updated = (bool) call_user_func_array( $this->call( 'update' ), [ $this->object->ID, $this->get_meta_key_name( $key ), $value ] );
+		$updated            = (bool) call_user_func_array( $this->call( 'update' ), [ $this->object->ID, $this->get_meta_key_name( $key ), $value ] );
 		$this->data[ $key ] = $value;
 		return $updated;
 	}

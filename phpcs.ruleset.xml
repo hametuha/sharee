@@ -14,8 +14,11 @@
 		<exclude name="Squiz.Commenting.LongConditionClosingComment.Missing" />
 		<exclude name="WordPress.WP.I18n.SingleUnderscoreGetTextFunction" />
 		<exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid" />
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+		<exclude name="WordPress.PHP.DisallowShortTernary" />
 	</rule>
 
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/tests/*</exclude-pattern>
 </ruleset>

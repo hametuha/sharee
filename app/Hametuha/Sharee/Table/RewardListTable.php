@@ -12,22 +12,24 @@ use Hametuha\Sharee\Utilities\TableHelper;
  */
 class RewardListTable extends \WP_List_Table {
 
-    use TableHelper;
+	use TableHelper;
 
 	/**
-     * Get table summary.
-     *
+	 * Get table summary.
+	 *
 	 * @var null
 	 */
-    public $summary = null;
+	public $summary = null;
 
 
 	function __construct() {
-		parent::__construct( array(
-			'singular' => 'user_reward',
-			'plural'   => 'user_rewards',
-			'ajax'     => false,
-		) );
+		parent::__construct(
+			array(
+				'singular' => 'user_reward',
+				'plural'   => 'user_rewards',
+				'ajax'     => false,
+			)
+		);
 	}
 
 	/**
@@ -57,7 +59,7 @@ class RewardListTable extends \WP_List_Table {
 		];
 		// Search revenues.
 		list( $status, $year, $monthnum, $type, $page_num ) = $this->get_current_properties();
-        $model  = RevenueModel::get_instance();
+		$model       = RevenueModel::get_instance();
 		$search_args = [
 			'year'      => $year,
 			'month'     => $monthnum,
@@ -66,12 +68,14 @@ class RewardListTable extends \WP_List_Table {
 			'type'      => $type,
 			'per_page'  => 20,
 			'page'      => $page_num,
-        ];
+		];
 		$this->items = $model->search( $search_args );
-		$this->set_pagination_args( [
-			'total_items' => $model->found_rows(),
-			'per_page'    => 20,
-		] );
+		$this->set_pagination_args(
+			[
+				'total_items' => $model->found_rows(),
+				'per_page'    => 20,
+			]
+		);
 		$this->summary = $model->search( $search_args, true );
 	}
 
@@ -82,34 +86,36 @@ class RewardListTable extends \WP_List_Table {
 	 * @param string $column_name
 	 */
 	public function column_default( $item, $column_name ) {
-	    $model = RevenueModel::get_instance();
+		$model = RevenueModel::get_instance();
 		switch ( $column_name ) {
 			case 'label':
-                $link  = '';
-			    if ( $is_post = $model->is_post_revenue( $item->revenue_type ) ) {
-			        // This is post.
-			        if ( $post = get_post( $item->object_id ) ) {
+				$link    = '';
+				$is_post = $model->is_post_revenue( $item->revenue_type );
+				if ( $is_post ) {
+					// This is post.
+					$post = get_post( $item->object_id );
+					if ( $post ) {
 						$label = get_the_title( $post );
 						$link  = get_edit_post_link( $post );
-                    } else {
-			            $label = _x( 'Deleted', 'post_object', 'sharee' );
-                    }
-                } else {
-			        // This is user.
+					} else {
+						$label = _x( 'Deleted', 'post_object', 'sharee' );
+					}
+				} else {
+					// This is user.
 					$user = get_userdata( $item->object_id );
 					if ( ! $user ) {
 						$label = __( 'Deleted User', 'sharee' );
 					} else {
 						$label = $user->display_name;
-                        $link  = add_query_arg( [ 'user_id' => $item->object_id ], admin_url( 'user-edit.php' ) );
+						$link  = add_query_arg( [ 'user_id' => $item->object_id ], admin_url( 'user-edit.php' ) );
 					}
-                }
-                $link = apply_filters( 'sharee_list_table_link', $link, $item, $is_post );
-                if ( $link ) {
-                    $label = sprintf( '<a href="%s">%s</a>', esc_url( $link ), esc_html( $label ) );
-                } else {
-                    $label = sprintf( '<span style="color:lightgrey">%s</span>', esc_html( $label ) );
-                }
+				}
+				$link = apply_filters( 'sharee_list_table_link', $link, $item, $is_post );
+				if ( $link ) {
+					$label = sprintf( '<a href="%s">%s</a>', esc_url( $link ), esc_html( $label ) );
+				} else {
+					$label = sprintf( '<span style="color:lightgrey">%s</span>', esc_html( $label ) );
+				}
 				printf( '<strong>[%s]</strong> %s -- %s', $model->type_label( $item->revenue_type ), esc_html( $item->description ), $label );
 				break;
 			case 'price':
@@ -140,11 +146,13 @@ class RewardListTable extends \WP_List_Table {
 	 * @return array List of CSS classes for the table tag.
 	 */
 	protected function get_table_classes() {
-	    return array_filter( parent::get_table_classes(), function( $c ) {
-	        return 'fixed' !== $c;
-        } );
+		return array_filter(
+			parent::get_table_classes(),
+			function( $c ) {
+				return 'fixed' !== $c;
+			}
+		);
 	}
-
 
 	/**
 	 * Extra controls to be displayed between bulk actions and pagination
@@ -155,31 +163,31 @@ class RewardListTable extends \WP_List_Table {
 	 * @param string $which
 	 */
 	protected function extra_tablenav( $which ) {
-		if ( 'top' != $which ) {
+		if ( 'top' !== $which ) {
 			return;
 		}
 		$model = RevenueModel::get_instance();
 		list( $status, $year, $month, $type, $page_num ) = $this->get_current_properties();
 		?>
 		<select name="status">
-            <option value="all" <?php selected( 'all', $status ) ?>><?php esc_html_e( 'All Status', 'sharee' ) ?></option>
-			<?php foreach ( $model->get_status() as $val => $label ) :?>
-				<option value="<?= esc_attr( $val ) ?>" <?php selected( $val, $status ) ?>>
-					<?= esc_html( $label ) ?>
+			<option value="all" <?php selected( 'all', $status ); ?>><?php esc_html_e( 'All Status', 'sharee' ); ?></option>
+			<?php foreach ( $model->get_status() as $val => $label ) : ?>
+				<option value="<?php echo esc_attr( $val ); ?>" <?php selected( $val, $status ); ?>>
+					<?php echo esc_html( $label ); ?>
 				</option>
 			<?php endforeach; ?>
 		</select>
-		<?php $this->filter_inputs() ?>
+		<?php $this->filter_inputs(); ?>
 		<?php
 	}
 
 	/**
-     * Returns total record count.
-     *
+	 * Returns total record count.
+	 *
 	 * @return int
 	 */
 	public function total_record() {
-	    return (int) $this->_pagination_args['total_items'];
-    }
+		return (int) $this->_pagination_args['total_items'];
+	}
 
 }

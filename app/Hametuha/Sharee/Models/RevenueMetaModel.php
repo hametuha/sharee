@@ -15,7 +15,7 @@ class RevenueMetaModel extends Model {
 
 	protected $version = '0.8.0';
 
-	protected $name    = 'revenue_meta';
+	protected $name = 'revenue_meta';
 
 	protected $priority = 11;
 
@@ -66,11 +66,13 @@ SQL;
 		if ( is_array( $value ) ) {
 			$value = serialize( $value );
 		}
-		return $this->insert( [
-			'key'        => $key,
-			'revenue_id' => $revenue_id,
-			'value'      => $value,
-		] );
+		return $this->insert(
+			[
+				'key'        => $key,
+				'revenue_id' => $revenue_id,
+				'value'      => $value,
+			]
+		);
 	}
 
 	/**
@@ -81,17 +83,22 @@ SQL;
 	 * @return false|int
 	 */
 	public function add_multiple_meta( $revenue_id, $records ) {
-		return $this->bulk_insert( array_map( function( $record ) use ( $revenue_id ) {
-			list( $key, $value ) = $record;
-			if ( is_array( $value ) ) {
-				$value = serialize( $value );
-			}
-			return [
-				'revenue_id' => $revenue_id,
-				'key'        => $key,
-				'value'      => $value,
-			];
-		}, $records ) );
+		return $this->bulk_insert(
+			array_map(
+				function( $record ) use ( $revenue_id ) {
+					list( $key, $value ) = $record;
+					if ( is_array( $value ) ) {
+						$value = serialize( $value );
+					}
+					return [
+						'revenue_id' => $revenue_id,
+						'key'        => $key,
+						'value'      => $value,
+					];
+				},
+				$records
+			)
+		);
 	}
 
 	/**

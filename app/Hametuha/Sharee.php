@@ -59,7 +59,7 @@ class Sharee extends Singleton {
 				if ( ! class_exists( $class_name ) ) {
 					continue;
 				}
-				$default_on = ! in_array( $match[1], $default_off );
+				$default_on = ! in_array( $match[1], $default_off, true );
 				$default_on = apply_filters( 'sharee_default_initialize', $default_on, $class_name );
 				if ( ! $default_on ) {
 					continue;

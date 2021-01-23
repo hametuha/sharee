@@ -24,8 +24,8 @@ class Command extends \WP_CLI_Command {
 	 */
 	public function address( $args ) {
 		list( $user_id ) = $args;
-		$address = new Address( $user_id );
-		$data = $address->to_array();
+		$address         = new Address( $user_id );
+		$data            = $address->to_array();
 		if ( ! $data ) {
 			\WP_CLI::error( 'No data found.' );
 		}
