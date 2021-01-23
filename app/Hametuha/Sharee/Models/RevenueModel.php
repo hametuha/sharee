@@ -517,16 +517,21 @@ SQL;
 	/**
 	 * Get fixed billing in month.
 	 *
-	 * @param int $year
-	 * @param int $month
-	 * @param array $types
+	 * @param int   $year  Billing year.
+	 * @param int   $month Billing month. If 0 is set, all month.
+	 * @param array $types Predefined type of billing.
 	 * @return array
 	 */
-	public function get_fixed_billing( $year, $month, $types = [] ) {
-		$wheres = [
-			$this->db->prepare( '( EXTRACT(YEAR_MONTH FROM fixed) = %d )', sprintf( '%04d%02d', $year, $month ) ),
-			'( status = 1 )'
-		];
+	public function get_fixed_billing( $year, $month = 0, $types = [] ) {
+		$wheres = [];
+		if ( $month ) {
+			// Search with year month.
+			$wheres[] = $this->db->prepare( '( EXTRACT(YEAR_MONTH FROM fixed) = %d )', sprintf( '%04d%02d', $year, $month ) );
+		} else {
+			// Search with year only.
+			$wheres[] = $this->db->prepare( '( EXTRACT(YEAR FROM fixed) = %d )', sprintf( '%04d', $year ) );
+		}
+		$wheres[] = '( status = 1 )';
 		if ( $types ) {
 			$wheres[] = sprintf( '( revenue_type IN (%s) )', implode( ', ', array_map( function( $type ) {
 				return $this->db->prepare( '%s', $type );

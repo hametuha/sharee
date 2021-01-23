@@ -18,7 +18,7 @@ To enable sharee, call bootstrap method.
 
 ### Reward List
 
-Reard list on WordPress Dashboard.
+Reward list on WordPress Dashboard.
 
 ### Payment List
 

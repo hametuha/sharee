@@ -18,7 +18,6 @@ class FunctionsTest extends WP_UnitTestCase {
 		\Hametuha\Sharee\Models\RevenueMetaModel::get_instance()->create_table();
 	}
 
-
 	/**
 	 * Test for range function.
 	 */
@@ -45,7 +44,6 @@ class FunctionsTest extends WP_UnitTestCase {
 		$model = \Hametuha\Sharee\Models\RevenueModel::get_instance();
 		// Save revenue.
 		$revenue_id = $model->add_revenue( 'task', 1, 1000 );
-		var_dump( $revenue_id );
 		$this->assertTrue( is_numeric( $revenue_id ) );
 		// Get revenue
 		$revenue = $model->get( $revenue_id );
