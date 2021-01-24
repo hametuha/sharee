@@ -17,8 +17,9 @@ require_once $_tests_dir . '/includes/functions.php';
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {
-	require dirname( dirname( __FILE__ ) ) . '/vendor/autoload.php';
-	\Hametuha\Sharee::get_instance();
+	require dirname( __DIR__ ) . '/sharee.php';
+	\Hametuha\Sharee\Models\RevenueModel::get_instance()->create_table();
+	\Hametuha\Sharee\Models\RevenueMetaModel::get_instance()->create_table();
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
