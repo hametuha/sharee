@@ -20,3 +20,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Load autoloader.
 require __DIR__ . '/vendor/autoload.php';
 \Hametuha\Sharee::get_instance();
+
+// Enable payment list.
+add_filter( 'sharee_should_enable', function( $enabled, $service ) {
+	switch ( $service ) {
+		case 'billing':
+			return true;
+		default:
+			return $enabled;
+	}
+}, 10, 2 );

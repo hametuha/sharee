@@ -153,7 +153,7 @@ SQL;
 	}
 
 	/**
-	 * Get status clss
+	 * Get status class
 	 *
 	 * @return array
 	 */
