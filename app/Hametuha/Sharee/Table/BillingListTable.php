@@ -16,16 +16,18 @@ use Hametuha\Sharee\Service\Bank;
  */
 class BillingListTable extends \WP_List_Table {
 
-    use TableHelper;
+	use TableHelper;
 
-    public $summary = null;
+	public $summary = null;
 
 	function __construct() {
-		parent::__construct( array(
-			'singular' => 'user_billing',
-			'plural'   => 'user_billings',
-			'ajax'     => false,
-		) );
+		parent::__construct(
+			array(
+				'singular' => 'user_billing',
+				'plural'   => 'user_billings',
+				'ajax'     => false,
+			)
+		);
 	}
 
 	/**
@@ -70,7 +72,7 @@ class BillingListTable extends \WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		return [
-			'update' => __( 'Mark as paid', 'sharee' ),
+			'update'   => __( 'Mark as paid', 'sharee' ),
 			'download' => __( 'Download CSV', 'sharee' ),
 		];
 	}
@@ -87,13 +89,15 @@ class BillingListTable extends \WP_List_Table {
 		];
 		// Get current status
 		list( $status, $year, $monthnum, $type, $page_num ) = $this->get_current_properties();
-		$this->items = $this->model->get_billing_list( $year, $monthnum );
-		$this->summary = $this->model->get_billing_summary( $year, $monthnum );
+		$this->items                                        = $this->model->get_billing_list( $year, $monthnum );
+		$this->summary                                      = $this->model->get_billing_summary( $year, $monthnum );
 		$total = $this->model->found_rows();
-		$this->set_pagination_args( [
-			'total_items' => $total,
-			'per_page'    => $total,
-		] );
+		$this->set_pagination_args(
+			[
+				'total_items' => $total,
+				'per_page'    => $total,
+			]
+		);
 	}
 
 	/**
@@ -119,17 +123,17 @@ class BillingListTable extends \WP_List_Table {
 				$billing = new Address( $item->object_id );
 				if ( $billing->validate() ) {
 					$color = 'green';
-					$icon = 'yes';
+					$icon  = 'yes';
 				} else {
 					$color = 'red';
-					$icon = 'no';
+					$icon  = 'no';
 				}
 				printf( '<i class="dashicons dashicons-%s" style="color: %s"></i>', $icon, $color );
 				break;
 			case 'user':
 				$user = get_userdata( $item->object_id );
 				if ( ! $user ) {
-					printf( '<span style="color: lightgrey">%s</span>',esc_html__( 'Deleted User', 'sharee' ) );
+					printf( '<span style="color: lightgrey">%s</span>', esc_html__( 'Deleted User', 'sharee' ) );
 				} else {
 					echo esc_html( $user->display_name );
 				}
@@ -144,7 +148,7 @@ class BillingListTable extends \WP_List_Table {
 				break;
 			case 'deducting':
 			case 'total':
-				echo $this->model->format( $item->{$column_name}  );
+				echo $this->model->format( $item->{$column_name} );
 				break;
 		}
 	}
@@ -159,27 +163,27 @@ class BillingListTable extends \WP_List_Table {
 	 * @param string $which
 	 */
 	protected function extra_tablenav( $which ) {
-		if ( 'top' != $which ) {
+		if ( 'top' !== $which ) {
 			return;
 		}
 		$this->filter_inputs();
 	}
 
 	/**
-     * Get model
-     *
+	 * Get model
+	 *
 	 * @param string $name
 	 * @return mixed
 	 */
 	public function __get( $name ) {
-	    switch ( $name ) {
-            case 'model':
-                return RevenueModel::get_instance();
-                break;
-            default:
-                return parent::__get( $name );
-                break;
-        }
-    }
+		switch ( $name ) {
+			case 'model':
+				return RevenueModel::get_instance();
+				break;
+			default:
+				return parent::__get( $name );
+				break;
+		}
+	}
 
 }

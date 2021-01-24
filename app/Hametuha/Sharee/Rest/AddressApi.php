@@ -27,12 +27,15 @@ class AddressApi extends RestPattern {
 		switch ( $http_method ) {
 			case 'POST':
 				foreach ( Address::settings() as $key => $data ) {
-					$arg = wp_parse_args( $data, [
-						'label'    => '',
-						'required' => false,
-						'callback' => null,
-						'type'     => 'text',
-					] );
+					$arg       = wp_parse_args(
+						$data,
+						[
+							'label'    => '',
+							'required' => false,
+							'callback' => null,
+							'type'     => 'text',
+						]
+					);
 					$api_value = [
 						'type'        => $arg['type'],
 						'description' => isset( $data['description'] ) ? $data['description'] : $arg['label'],
@@ -41,7 +44,7 @@ class AddressApi extends RestPattern {
 					if ( $arg['callback'] ) {
 						$api_value['validate_callback'] = $arg['callback'];
 					}
-					if ( isset(  $data['default'] ) ) {
+					if ( isset( $data['default'] ) ) {
 						$api_value['default'] = $arg['default'];
 					}
 					$args[ $key ] = $api_value;
@@ -64,11 +67,13 @@ class AddressApi extends RestPattern {
 		$message = $success
 			? __( 'Your billing address is valid.', 'sharee' )
 			: __( 'Your billing address is invalid. Please fill required information.', 'sharee' );
-		return new \WP_REST_Response( [
-			'success' => $success,
-			'message' => $message,
-			'data'    => $address->to_array(),
-		] );
+		return new \WP_REST_Response(
+			[
+				'success' => $success,
+				'message' => $message,
+				'data'    => $address->to_array(),
+			]
+		);
 	}
 
 	/**
@@ -82,11 +87,13 @@ class AddressApi extends RestPattern {
 		foreach ( Address::settings() as $key => $data ) {
 			$address->update( $key, $request->get_param( $key ) );
 		}
-		return new \WP_REST_Response( [
-			'success' => true,
-			'message' => __( 'Your billing information has been updated.', 'sharee' ),
-			'data'    => $address->to_array(),
-		] );
+		return new \WP_REST_Response(
+			[
+				'success' => true,
+				'message' => __( 'Your billing information has been updated.', 'sharee' ),
+				'data'    => $address->to_array(),
+			]
+		);
 	}
 
 	/**

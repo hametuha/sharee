@@ -62,12 +62,12 @@ abstract class RestPattern extends RestApi {
 	protected function get_user_args() {
 		return [
 			'user_id' => [
-				'type' => 'int|string',
-				'required' => true,
+				'type'              => 'int|string',
+				'required'          => true,
 				'validate_callback' => function( $var ) {
 					return ( 'me' === $var ) || is_numeric( $var );
 				},
-				'description' => 'User ID or "me".',
+				'description'       => 'User ID or "me".',
 			],
 		];
 	}

@@ -1,16 +1,22 @@
 {
   "name": "sharee",
-  "version": "1.0.0",
-  "description": "WordPress library for Reward manager",
   "main": "gulpfile.js",
-  "directories": {
-    "test": "tests"
+  "engines": {
+    "node": "12.x"
   },
   "scripts": {
-    "test": "test",
+    "start": "wp-env start",
+    "start:debug": "wp-env start --xdebug",
+    "update": "wp-env start --update",
+    "env": "wp-env",
+    "cli": "wp-env run cli wp",
+    "test": "echo no JS test.",
     "watch": "gulp watch",
+		"package": "gulp build",
     "gulp": "gulp",
-    "fix": "eslint --fix src/js"
+    "gulp:task": "gulp --task",
+    "fix": "eslint --fix src/js",
+    "lint": "gulp eslint"
   },
   "repository": {
     "type": "git",
@@ -26,6 +32,7 @@
   },
   "homepage": "https://github.com/hametuha/sharee#readme",
   "devDependencies": {
+    "@wordpress/env": "^3.0.1",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.6",
     "babel-preset-env": "^1.7.0",
@@ -33,7 +40,7 @@
     "eslint": "^5.4.0",
     "eslint-config-wordpress": "^2.0.0",
     "event-stream": "^3.3.2",
-    "gulp": "^3.9.0",
+    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-babel": "^7.0.0",
     "gulp-concat": "^2.6.0",

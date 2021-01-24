@@ -18,23 +18,23 @@ class RevenueModel extends Model {
 
 	protected $version = '0.8.1';
 
-	protected $name    = 'revenues';
+	protected $name = 'revenues';
 
 	protected $default_placeholder = [
-		'revenue_id' => '%d',
+		'revenue_id'   => '%d',
 		'revenue_type' => '%s',
-		'object_id' => '%d',
-		'price' => '%f',
-		'unit' => '%f',
-		'tax' => '%f',
-		'deducting' => '%f',
-		'total' => '%f',
-		'status' => '%s',
-		'description' => '%s',
-		'created' => '%s',
-		'fixed'   => '%s',
-		'updated' => '%s',
-		'currency' => '%s',
+		'object_id'    => '%d',
+		'price'        => '%f',
+		'unit'         => '%f',
+		'tax'          => '%f',
+		'deducting'    => '%f',
+		'total'        => '%f',
+		'status'       => '%s',
+		'description'  => '%s',
+		'created'      => '%s',
+		'fixed'        => '%s',
+		'updated'      => '%s',
+		'currency'     => '%s',
 	];
 
 	protected $models = [
@@ -82,7 +82,7 @@ class RevenueModel extends Model {
 				`created`      DATETIME NOT NULL,
 				`fixed`        DATETIME NOT NULL,
 				`updated`      DATETIME NOT NULL,
-				`currency`     VARCHAR(45) NOT NULL DEFAULT 'JPY'
+				`currency`     VARCHAR(45) NOT NULL DEFAULT 'JPY',
 				INDEX  type_user( `revenue_type`, `object_id`, `created` ),
 				INDEX  by_date( `created`, `status` )
 			) ENGINE {$this->engine} DEFAULT CHARSET={$this->charset}
@@ -103,7 +103,7 @@ SQL;
 	 * @return bool
 	 */
 	public function is_post_revenue( $type ) {
-		return in_array( $type, $this->get_types_for_post_type() );
+		return in_array( $type, $this->get_types_for_post_type(), true );
 	}
 
 	/**
@@ -131,11 +131,14 @@ SQL;
 	 * @return array
 	 */
 	public function get_status() {
-		return array_merge( [
-			0  => _x( 'Pending', 'revenue-status', 'sharee' ),
-			1  => _x( 'Paid', 'revenue-status', 'sharee' ),
-			-1 => _x( 'Rejected', 'revenue-status', 'sharee' ),
-		], apply_filters( 'sharee_additional_status', [] ) );
+		return array_merge(
+			[
+				0  => _x( 'Pending', 'revenue-status', 'sharee' ),
+				1  => _x( 'Paid', 'revenue-status', 'sharee' ),
+				-1 => _x( 'Rejected', 'revenue-status', 'sharee' ),
+			],
+			apply_filters( 'sharee_additional_status', [] )
+		);
 	}
 
 	/**
@@ -155,11 +158,14 @@ SQL;
 	 * @return array
 	 */
 	public function get_status_class() {
-		return apply_filters( 'sharee_status_class', [
-			0  => 'warning',
-			1  => 'success',
-			-1 => 'default',
-		] );
+		return apply_filters(
+			'sharee_status_class',
+			[
+				0  => 'warning',
+				1  => 'success',
+				-1 => 'default',
+			]
+		);
 	}
 
 	/**
@@ -213,7 +219,7 @@ SQL;
 	 */
 	public function get_month_range( $year, $month ) {
 		$start = sprintf( '%04d-%02d-01 00:00:00', $year, $month );
-		$d = new \DateTime();
+		$d     = new \DateTime();
 		$d->setTimezone( new \DateTimeZone( 'UTC' ) );
 		$d->setDate( $year, $month, 1 );
 		$end = $d->format( 'Y-m-t 23:59:59' );
@@ -247,20 +253,24 @@ SQL;
 		if ( ! $old_revenue ) {
 			return false;
 		}
-		$old_status = $old_revenue->status;
+		$old_status = (int) $old_revenue->status;
 		$old_label  = $this->label( $old_status );
 		$new_label  = $this->label( $status );
-		if ( $old_status == $status ) {
+		if ( $old_status === (int) $status ) {
 			// Nothing changes.
 			return false;
 		}
-		$updated = $this->update( [
-			'status'   => $status,
-		], [
-			'revenue_id' => $revenue_id,
-		] );
+		$updated = $this->update(
+			[
+				'status' => $status,
+			],
+			[
+				'revenue_id' => $revenue_id,
+			]
+		);
 		if ( $updated ) {
 			// Save log.
+			// translators: %1$s is old status, %2$s is new status.
 			$message = sprintf( __( 'Status changed %1$s to %2$s.', 'sharee' ), $old_label, $new_label );
 			$this->revenue_meta->add_meta( 'log', $revenue_id, $message );
 			return true;
@@ -285,18 +295,21 @@ SQL;
 	 * @return \WP_Error|int
 	 */
 	public function add_revenue( $type, $object_id, $price, $args = [] ) {
-		$args = wp_parse_args( $args, [
-			'revenue_type' => $type,
-			'object_id'    => $object_id,
-			'price'        => $price,
-			'total'        => $price,
-			'unit'         => 1,
-			'tax'          => 0,
-			'deducting'    => 0,
-			'description'  => '',
-			'status'       => 0,
-			'created'      => current_time( 'mysql', $this->use_gmt() ),
-		] );
+		$args = wp_parse_args(
+			$args,
+			[
+				'revenue_type' => $type,
+				'object_id'    => $object_id,
+				'price'        => $price,
+				'total'        => $price,
+				'unit'         => 1,
+				'tax'          => 0,
+				'deducting'    => 0,
+				'description'  => '',
+				'status'       => 0,
+				'created'      => current_time( 'mysql', $this->use_gmt() ),
+			]
+		);
 		// Save revenue.
 		return $this->insert( $args );
 	}
@@ -312,19 +325,28 @@ SQL;
 		$args = wp_parse_args( $args, $this->default_search_args() );
 		// Build where flags.
 		$wheres = [];
-		$type = array_filter( (array) $args['type'] );
-		if ( 1 == count( $type ) ) {
+		$type   = array_filter( (array) $args['type'] );
+		if ( 1 === count( $type ) ) {
 			$wheres[] = $this->db->prepare( '( type = %s )', $type[0] );
-		} else if ( $type ) {
-			$wheres[] = sprintf( '( `type` IN ( %s ) )', implode( ', ', array_map( function( $t ) {
-				return $this->db->prepare( '%s', $t );
-			}, $type ) ) );
+		} elseif ( $type ) {
+			$wheres[] = sprintf(
+				'( `type` IN ( %s ) )',
+				implode(
+					', ',
+					array_map(
+						function( $t ) {
+							return $this->db->prepare( '%s', $t );
+						},
+						$type
+					)
+				)
+			);
 		}
 		if ( $args['object_id'] ) {
 			if ( is_array( $args['object_id'] ) ) {
-				$wheres[] = sprintf( '( object_id IN ( %s ) )', implode( ',', array_map( 'intval', $args[ 'object_id' ] ) ) );
+				$wheres[] = sprintf( '( object_id IN ( %s ) )', implode( ',', array_map( 'intval', $args['object_id'] ) ) );
 			} else {
-				$wheres[] = $this->db->prepare( '( object_id = %d )', $args[ 'object_id' ] );
+				$wheres[] = $this->db->prepare( '( object_id = %d )', $args['object_id'] );
 			}
 		}
 		if ( is_numeric( $args['status'] ) ) {
@@ -355,7 +377,7 @@ SQL;
 			ORDER BY created DESC
 SQL;
 			if ( $args['per_page'] ) {
-				$query .= sprintf( ' LIMIT %d, %d', $args['per_page'] * ( max( 1, $args['page'] ) - 1 ), $args['per_page']  );
+				$query .= sprintf( ' LIMIT %d, %d', $args['per_page'] * ( max( 1, $args['page'] ) - 1 ), $args['per_page'] );
 			}
 			return $this->get_results( $query );
 		} else {
@@ -388,7 +410,7 @@ SQL;
 	 */
 	public function get_billing_list( $year, $month, $user_id = 0, $status = 0 ) {
 		$wheres = $this->get_billing_where( $year, $month, $user_id, $status );
-		$query = <<<SQL
+		$query  = <<<SQL
 			SELECT SUM(total) AS total, object_id, SUM(deducting) AS deducting
 			FROM {$this->table}
 			{$wheres}
@@ -409,7 +431,7 @@ SQL;
 	 */
 	public function get_billing_summary( $year, $month, $user_id = 0, $status = 0 ) {
 		$wheres = $this->get_billing_where( $year, $month, $user_id, $status );
-		$query = <<<SQL
+		$query  = <<<SQL
 		SELECT COUNT(revenue_id) AS record_number, SUM(total) AS total, SUM(deducting) AS deducting
 			FROM {$this->table}
 			{$wheres}
@@ -431,7 +453,7 @@ SQL;
 		$wheres = [];
 		if ( $year && $month ) {
 			list( $start, $end ) = $this->get_month_range( $year, $month );
-			$wheres[] = $this->db->prepare( '( created BETWEEN %s AND %s )', $start, $end );
+			$wheres[]            = $this->db->prepare( '( created BETWEEN %s AND %s )', $start, $end );
 		} elseif ( $year ) {
 			$wheres[] = $this->db->prepare( '( EXTRACT(YEAR FROM created) = %d )', $year );
 		} elseif ( $month ) {
@@ -441,9 +463,18 @@ SQL;
 			$wheres[] = $this->db->prepare( '( status = %d )', $status );
 		}
 		if ( $types ) {
-			$wheres[] = sprintf( '( revenue_type IN ( %s ) )', implode( ', ', array_map( function( $type ) {
-				return $this->db->prepare( '%s', $type );
-			}, $types ) ) );
+			$wheres[] = sprintf(
+				'( revenue_type IN ( %s ) )',
+				implode(
+					', ',
+					array_map(
+						function( $type ) {
+							return $this->db->prepare( '%s', $type );
+						},
+						$types
+					)
+				)
+			);
 		}
 		if ( $user_id ) {
 			if ( is_array( $user_id ) ) {
@@ -477,8 +508,8 @@ SQL;
 		if ( ! $object_ids ) {
 			return 0;
 		}
-		$wheres = $this->get_billing_where( $year, $month, $object_ids, 0, $type );
-		$query = <<<SQL
+		$wheres          = $this->get_billing_where( $year, $month, $object_ids, 0, $type );
+		$query           = <<<SQL
 			SELECT revenue_id, object_id FROM {$this->table}
 			{$wheres}
 SQL;
@@ -490,7 +521,7 @@ SQL;
 		$user_ids    = [];
 		foreach ( $current_records as $row ) {
 			$revenue_ids[] = $row->revenue_id;
-			if ( ! in_array( $row->object_id, $user_ids ) ) {
+			if ( ! in_array( $row->object_id, $user_ids, true ) ) {
 				$user_ids[] = $row->object_id;
 			}
 		}
@@ -499,16 +530,21 @@ SQL;
 			SET status=1, fixed=%s, updated=%s
 			{$wheres}
 SQL;
-		$now = current_time( 'mysql', $this->use_gmt() );
-		$updated = $this->db->query( $this->db->prepare( $update_query, $now, $now ) );
+		$now          = current_time( 'mysql', $this->use_gmt() );
+		$updated      = $this->db->query( $this->db->prepare( $update_query, $now, $now ) );
 		if ( count( $revenue_ids ) === $updated ) {
-			$this->revenue_meta->bulk_insert( array_map( function( $revenue_id ) {
-				return [
-					'key'        => 'billing_method',
-					'revenue_id' => $revenue_id,
-					'value'      => 'bank',
-				];
-			}, $revenue_ids ) );
+			$this->revenue_meta->bulk_insert(
+				array_map(
+					function( $revenue_id ) {
+						return [
+							'key'        => 'billing_method',
+							'revenue_id' => $revenue_id,
+							'value'      => 'bank',
+						];
+					},
+					$revenue_ids
+				)
+			);
 		}
 		do_action( 'sharee_revenue_transfered', $user_ids );
 		return $updated;
@@ -517,23 +553,37 @@ SQL;
 	/**
 	 * Get fixed billing in month.
 	 *
-	 * @param int $year
-	 * @param int $month
-	 * @param array $types
+	 * @param int   $year  Billing year.
+	 * @param int   $month Billing month. If 0 is set, all month.
+	 * @param array $types Predefined type of billing.
 	 * @return array
 	 */
-	public function get_fixed_billing( $year, $month, $types = [] ) {
-		$wheres = [
-			$this->db->prepare( '( EXTRACT(YEAR_MONTH FROM fixed) = %d )', sprintf( '%04d%02d', $year, $month ) ),
-			'( status = 1 )'
-		];
+	public function get_fixed_billing( $year, $month = 0, $types = [] ) {
+		$wheres = [];
+		if ( $month ) {
+			// Search with year month.
+			$wheres[] = $this->db->prepare( '( EXTRACT(YEAR_MONTH FROM fixed) = %d )', sprintf( '%04d%02d', $year, $month ) );
+		} else {
+			// Search with year only.
+			$wheres[] = $this->db->prepare( '( EXTRACT(YEAR FROM fixed) = %d )', sprintf( '%04d', $year ) );
+		}
+		$wheres[] = '( status = 1 )';
 		if ( $types ) {
-			$wheres[] = sprintf( '( revenue_type IN (%s) )', implode( ', ', array_map( function( $type ) {
-				return $this->db->prepare( '%s', $type );
-			}, $types ) ) );
+			$wheres[] = sprintf(
+				'( revenue_type IN (%s) )',
+				implode(
+					', ',
+					array_map(
+						function( $type ) {
+							return $this->db->prepare( '%s', $type );
+						},
+						$types
+					)
+				)
+			);
 		}
 		$wheres = 'WHERE ' . implode( ' AND ', $wheres );
-		$query = <<<SQL
+		$query  = <<<SQL
 			SELECT
 				SUM( price * unit ) AS before_tax,
 				SUM(tax) AS tax,
@@ -563,8 +613,8 @@ SQL;
 		}
 		$wheres[] = '( r.status = 1 )';
 		$wheres[] = sprintf( '( EXTRACT(YEAR from r.fixed) = %04d )', $year );
-		$wheres = ' WHERE ' . implode( ' AND ', $wheres );
-		$query = <<<SQL
+		$wheres   = ' WHERE ' . implode( ' AND ', $wheres );
+		$query    = <<<SQL
 			SELECT
 				SUM(r.total) AS total,
 				SUM(r.deducting) AS deducting,
@@ -589,12 +639,14 @@ SQL;
 	 * @return array
 	 */
 	public function get_my_numbers( $year ) {
-		$users = $this->select( 'u.*, SUM( s.total ) AS amount' )
+		$users    = $this->select( 'u.*, SUM( s.total ) AS amount' )
 			->from( "{$this->db->users} AS u" )
 			->join( "{$this->table} AS s", 'u.ID = s.user_id' )
-			->wheres( [
-				'EXTRACT( YEAR FROM s.fixed ) = %d' => $year,
-			] )
+			->wheres(
+				[
+					'EXTRACT( YEAR FROM s.fixed ) = %d' => $year,
+				]
+			)
 			->group_by( 'u.ID' )
 			->result();
 		$user_ids = [];
@@ -607,43 +659,46 @@ SQL;
 			->where_in( 'user_id', $user_ids, '%d' )
 			->where_in( 'meta_key', [ '_billing_name', '_billing_number', '_billing_address' ] )
 			->result();
-		return array_map( function( $user ) use ( $metas ) {
-			$user->my_number = '';
-			$user->address   = '';
-			foreach ( $metas as $row ) {
-				if ( $row->user_id != $user->ID ) {
-					continue;
+		return array_map(
+			function( $user ) use ( $metas ) {
+				$user->my_number = '';
+				$user->address   = '';
+				foreach ( $metas as $row ) {
+					if ( (int) $row->user_id !== (int) $user->ID ) {
+						continue;
+					}
+					switch ( $row->meta_key ) {
+						case '_billing_name':
+							$user->display_name = $row->meta_value;
+							break;
+						case '_billing_number':
+							$user->my_number = $row->meta_value;
+							break;
+						case '_billing_address':
+							$user->address = $row->meta_value;
+							break;
+						default:
+							// Do nothing.
+							break;
+					}
 				}
-				switch ( $row->meta_key ) {
-					case '_billing_name';
-						$user->display_name = $row->meta_value;
-						break;
-					case '_billing_number':
-						$user->my_number = $row->meta_value;
-						break;
-					case '_billing_address':
-						$user->address = $row->meta_value;
-						break;
-					default:
-						// Do nothing.
-						break;
-				}
-			}
-			return $user;
-		}, $users );
+				return $user;
+			},
+			$users
+		);
 	}
 
 	/**
 	 * Get availalble years.
 	 */
 	public function available_years() {
-		$query = <<<SQL
+		$query  = <<<SQL
 			SELECT EXTRACT(YEAR FROM created) FROM {$this->table}
 			ORDER BY created ASC
 			LIMIT 1
 SQL;
-		$oldest = intval( $this->get_var( $query ) ?: date_i18n( 'Y') );
-		$range = range( $oldest, (int) date_i18n( 'Y' ) );
+		$oldest = intval( $this->get_var( $query ) ?: date_i18n( 'Y' ) );
+		$range  = range( $oldest, (int) date_i18n( 'Y' ) );
 		return array_reverse( $range );
 	}
 

@@ -21,43 +21,43 @@ class Account extends MetaMaster {
 	 */
 	protected function get_setting() {
 		return [
-			'group' => [
-				'label' => __( 'Bank Name', 'sharee' ),
+			'group'       => [
+				'label'    => __( 'Bank Name', 'sharee' ),
 				'required' => true,
 			],
-			'group_code' => [
-				'label' => __( 'Bank Code', 'sharee' ),
+			'group_code'  => [
+				'label'    => __( 'Bank Code', 'sharee' ),
 				'required' => true,
 				'callback' => function( $var ) {
 					return is_numeric( $var );
 				},
 			],
-			'branch' => [
-				'label' => __( 'Branch Name', 'sharee' ),
+			'branch'      => [
+				'label'    => __( 'Branch Name', 'sharee' ),
 				'required' => true,
 			],
 			'branch_code' => [
-				'label' => __( 'Branch Code', 'sharee' ),
+				'label'    => __( 'Branch Code', 'sharee' ),
 				'required' => true,
 				'callback' => function( $var ) {
 					return is_numeric( $var );
 				},
 			],
-			'type' => [
-				'label' => __( 'Account Type', 'sharee' ),
-				'type' => 'number',
-				'enum' => [ 1, 2, 4 ],
+			'type'        => [
+				'label'    => __( 'Account Type', 'sharee' ),
+				'type'     => 'number',
+				'enum'     => [ 1, 2, 4 ],
 				'required' => true,
 			],
-			'number' => [
-				'label' => __( 'Account Number', 'sharee' ),
+			'number'      => [
+				'label'    => __( 'Account Number', 'sharee' ),
 				'required' => true,
 				'callback' => function( $var ) {
 					return is_numeric( $var );
 				},
 			],
-			'name' => [
-				'label' => __( 'Account Name', 'sharee' ),
+			'name'        => [
+				'label'    => __( 'Account Name', 'sharee' ),
 				'required' => true,
 			],
 		];
