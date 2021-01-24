@@ -508,8 +508,8 @@ SQL;
 		if ( ! $object_ids ) {
 			return 0;
 		}
-		$wheres          = $this->get_billing_where( $year, $month, $object_ids, 0, $type );
-		$query           = <<<SQL
+		$wheres = $this->get_billing_where( $year, $month, $object_ids, 0, $type );
+		$query  = <<<SQL
 			SELECT revenue_id, object_id FROM {$this->table}
 			{$wheres}
 SQL;
@@ -533,6 +533,7 @@ SQL;
 		$now          = current_time( 'mysql', $this->use_gmt() );
 		$updated      = $this->db->query( $this->db->prepare( $update_query, $now, $now ) );
 		if ( count( $revenue_ids ) === $updated ) {
+			// todo: Should capable to change billing method.
 			$this->revenue_meta->bulk_insert(
 				array_map(
 					function( $revenue_id ) {
@@ -547,7 +548,7 @@ SQL;
 			);
 		}
 		do_action( 'sharee_revenue_transfered', $user_ids );
-		return $updated;
+		return (int) $updated;
 	}
 
 	/**
@@ -584,7 +585,7 @@ SQL;
 			);
 		}
 		if ( $only_with_deducting ) {
-			$wheres[] = $this->db->prepare( '( deducting < %d )', 0 );
+			$wheres[] = $this->db->prepare( '( deducting > %d )', 0 );
 		}
 		$wheres = 'WHERE ' . implode( ' AND ', $wheres );
 		$query  = <<<SQL
