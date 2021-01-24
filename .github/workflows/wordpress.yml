@@ -35,10 +35,13 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
 
-      - name: install npm
+      - name: Install node
         uses: actions/setup-node@v1
         with:
           node-version: '12'
+
+      - name: Install npm packages
+        run: npm install
 
       - name: Validate composer.json and composer.lock
         run: composer validate
