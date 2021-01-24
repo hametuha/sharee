@@ -44,6 +44,9 @@ class FunctionsTest extends WP_UnitTestCase {
 		$model = \Hametuha\Sharee\Models\RevenueModel::get_instance();
 		// Save revenue.
 		$revenue_id = $model->add_revenue( 'task', 1, 1000 );
+		if ( is_wp_error( $revenue_id ) ) {
+			throw new \Exception( $revenue_id->get_error_message() );
+		}
 		$this->assertTrue( is_numeric( $revenue_id ) );
 		// Get revenue
 		$revenue = $model->get( $revenue_id );

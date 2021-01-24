@@ -82,7 +82,7 @@ class RevenueModel extends Model {
 				`created`      DATETIME NOT NULL,
 				`fixed`        DATETIME NOT NULL,
 				`updated`      DATETIME NOT NULL,
-				`currency`     VARCHAR(45) NOT NULL DEFAULT 'JPY'
+				`currency`     VARCHAR(45) NOT NULL DEFAULT 'JPY',
 				INDEX  type_user( `revenue_type`, `object_id`, `created` ),
 				INDEX  by_date( `created`, `status` )
 			) ENGINE {$this->engine} DEFAULT CHARSET={$this->charset}
