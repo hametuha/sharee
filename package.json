@@ -12,10 +12,11 @@
     "cli": "wp-env run cli wp",
     "test": "echo no JS test.",
     "watch": "gulp watch",
+		"package": "gulp build",
     "gulp": "gulp",
     "gulp:task": "gulp --task",
     "fix": "eslint --fix src/js",
-    "lint": "gulp run eslint"
+    "lint": "gulp eslint"
   },
   "repository": {
     "type": "git",
@@ -39,7 +40,7 @@
     "eslint": "^5.4.0",
     "eslint-config-wordpress": "^2.0.0",
     "event-stream": "^3.3.2",
-    "gulp": "^3.9.0",
+    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-babel": "^7.0.0",
     "gulp-concat": "^2.6.0",
