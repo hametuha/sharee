@@ -553,12 +553,13 @@ SQL;
 	/**
 	 * Get fixed billing in month.
 	 *
-	 * @param int   $year  Billing year.
-	 * @param int   $month Billing month. If 0 is set, all month.
-	 * @param array $types Predefined type of billing.
+	 * @param int   $year                Billing year.
+	 * @param int   $month               Billing month. If 0 is set, all month.
+	 * @param array $types               Predefined type of billing.
+	 * @param bool  $only_with_deducting Choose only deducting.
 	 * @return array
 	 */
-	public function get_fixed_billing( $year, $month = 0, $types = [] ) {
+	public function get_fixed_billing( $year, $month = 0, $types = [], $only_with_deducting = false ) {
 		$wheres = [];
 		if ( $month ) {
 			// Search with year month.
@@ -581,6 +582,9 @@ SQL;
 					)
 				)
 			);
+		}
+		if ( $only_with_deducting ) {
+			$wheres[] = $this->db->prepare( '( deducting < %d )', 0 );
 		}
 		$wheres = 'WHERE ' . implode( ' AND ', $wheres );
 		$query  = <<<SQL
