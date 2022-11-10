@@ -5,10 +5,12 @@
  * @package wpametu
  */
 
+use Hametuha\Sharee\Tests\UnitTestCase;
+
 /**
  * Sample test case.
  */
-class FunctionsTest extends \Hametuha\Sharee\Tests\UnitTestCase {
+class FunctionsTest extends UnitTestCase {
 
 	/**
 	 * Test for range function.

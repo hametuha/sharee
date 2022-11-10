@@ -513,6 +513,7 @@ SQL;
 			SELECT revenue_id, object_id FROM {$this->table}
 			{$wheres}
 SQL;
+		// Execute.
 		$current_records = $this->get_results( $query );
 		if ( ! $current_records ) {
 			return 0;

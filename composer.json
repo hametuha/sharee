@@ -26,17 +26,23 @@
 	],
 	"minimum-stability": "stable",
 	"require": {
-		"php": "^5.6|^7.0",
-		"hametuha/pattern": "^0.9"
+		"php": "^7.2|^8",
+		"hametuha/pattern": "^1.0"
 	},
 	"require-dev": {
 		"squizlabs/php_codesniffer": "^3.5",
-		"phpunit/phpunit": "~5.7",
-		"wp-coding-standards/wpcs": "~2.3"
+		"phpunit/phpunit": "~5.7|^6|^7",
+		"wp-coding-standards/wpcs": "~2.3",
+		"yoast/phpunit-polyfills": "^1.0"
 	},
 	"autoload": {
 		"psr-0": {
 			"Hametuha\\Sharee": "app/"
+		}
+	},
+	"autoload-dev": {
+		"psr-0": {
+			"Hametuha\\Sharee\\Tests": "tests/src"
 		}
 	}
 }
