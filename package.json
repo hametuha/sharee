@@ -2,7 +2,7 @@
   "name": "sharee",
   "main": "gulpfile.js",
   "engines": {
-    "node": "12.x"
+    "node": ">=14.x"
   },
   "scripts": {
     "start": "wp-env start",
