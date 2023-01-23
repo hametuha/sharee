@@ -15,9 +15,9 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        operating-system: [ ubuntu-18.04 ]  # OS. ubuntu-18.04 is also available.
+        operating-system: [ ubuntu-latest ]  # OS. ubuntu-18.04 is also available.
         php: [ '7.2', '7.4' ] # PHP versions to check.
-        wp: [ 'latest', '5.8' ]      # WordPress version to check.
+        wp: [ 'latest', '5.9' ]      # WordPress version to check.
     services:
       mysql:
         image: mysql:5.7
@@ -30,11 +30,13 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Setup PHP with composer v2
+      - name: Setup PHP with composer
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          tools: composer:v2.2
+          tools: composer
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -55,7 +57,7 @@ jobs:
         run: composer test
 
   assets:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     name: Assets Test
     steps:
       - uses: actions/checkout@master
@@ -76,7 +78,7 @@ jobs:
     name: Release build
     needs: [ test, assets ]
     if: contains(github.ref, 'tags/')
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
 
