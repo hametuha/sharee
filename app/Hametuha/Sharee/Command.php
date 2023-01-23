@@ -92,7 +92,7 @@ class Command extends \WP_CLI_Command {
 		if ( $user_id && ! is_numeric( $user_id ) ) {
 			\WP_CLI::error( 'User id should be numeric: ' . $user_id );
 		}
-		$dry_run  = $options['dry-run'] ?? false;
+		$dry_run    = $options['dry-run'] ?? false;
 		$query_args = [
 			'count_total' => true,
 			'meta_query'  => [

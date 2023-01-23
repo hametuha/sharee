@@ -28,7 +28,7 @@ class Address extends MetaMaster {
 				'required' => true,
 			],
 			'number'   => [
-				'label'    => __( 'Tax Number', 'sharee' ),
+				'label' => __( 'Tax Number', 'sharee' ),
 			],
 			'address'  => [
 				'label'   => __( 'Address', 'sharee' ),
