@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Sharee\n"
-"POT-Creation-Date: 2018-10-12 17:35+0900\n"
+"POT-Creation-Date: 2023-01-23 11:40+0900\n"
 "PO-Revision-Date: 2017-01-19 18:39+0900\n"
 "Last-Translator: Takahashi Fumiki <takahashi.fumiki@hametuha.co.jp>\n"
 "Language-Team: Hametuha INC. <takahashi.fumiki@hametuha.co.jp>\n"
@@ -10,18 +10,19 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: node_modules\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 "X-Poedit-SearchPathExcluded-2: src\n"
 "X-Poedit-SearchPathExcluded-3: tests\n"
+"X-Poedit-SearchPathExcluded-4: wordpress\n"
 
 #: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:39
 msgid "Billing"
@@ -32,86 +33,91 @@ msgid ""
 "This is your billing information. To get rewarded, please fill up all forms."
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:81
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:84
 msgid "Sorry, but no result found."
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:82
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:85
 msgid "Bank is not specified."
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:132
-#: app/Hametuha/Sharee/Table/BillingListTable.php:60
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:136
+#: app/Hametuha/Sharee/Table/BillingListTable.php:62
 msgid "Bank Account"
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:133
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:137
 msgid "Bank account is required to be rewarded. Only available for Japan."
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:134
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:233
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:138
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:236
 msgid "Save"
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:161
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:165
 msgid ""
 "Type and search your bank. Bank code will be automatically input if you "
 "found your bank."
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:177
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:181
 msgid "Once you select a bank, you can search it's branches."
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:189
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:193
 #: app/Hametuha/Sharee/Master/Account.php:85
 msgctxt "bank_type"
 msgid "Saving"
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:190
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:194
 #: app/Hametuha/Sharee/Master/Account.php:79
 msgctxt "bank_type"
 msgid "Checking"
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:191
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:195
 #: app/Hametuha/Sharee/Master/Account.php:82
 msgctxt "bank_type"
 msgid "Deposite"
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:203
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:207
 #: app/Hametuha/Sharee/Master/Account.php:60
 msgid "Account Name"
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:204
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:208
 msgid "Please write your name in Katakana."
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:231
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:234
 msgid "Billing Information"
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:232
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:235
 msgid "This information is required to send reward to you."
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:250
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:253
 msgid "e.g. John Doe"
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:259
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:262
+msgctxt "tax-number-detail"
+msgid "If you have a valid tax number, please input."
+msgstr ""
+
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:265
 msgid "e.g. Minami Aoyama 2-11-13, Minatoku Tokyo"
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:264
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:270
 msgid "e.g. Minami Aoyama Bld. 4F"
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:279
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:285
 msgid "Enter address from zip code."
 msgstr ""
 
@@ -159,68 +165,68 @@ msgstr ""
 msgid "Zip Code"
 msgstr ""
 
-#: app/Hametuha/Sharee/Master/Address.php:47
+#: app/Hametuha/Sharee/Master/Address.php:48
 #, php-format
 msgid "Invalid format: %s Only number and hyphen is available."
 msgstr ""
 
-#: app/Hametuha/Sharee/Master/Address.php:51
+#: app/Hametuha/Sharee/Master/Address.php:52
 msgid "Country"
 msgstr ""
 
-#: app/Hametuha/Sharee/Master/Address.php:54
+#: app/Hametuha/Sharee/Master/Address.php:55
 msgid "Tel"
 msgstr ""
 
-#: app/Hametuha/Sharee/Master/Address.php:57
+#: app/Hametuha/Sharee/Master/Address.php:58
 msgid "Invalid format. Only number, +, and hyphen(-) is available."
 msgstr ""
 
-#: app/Hametuha/Sharee/Models/RevenueModel.php:114
+#: app/Hametuha/Sharee/Models/RevenueModel.php:136
 msgctxt "revenue-status"
 msgid "Pending"
 msgstr ""
 
-#: app/Hametuha/Sharee/Models/RevenueModel.php:115
+#: app/Hametuha/Sharee/Models/RevenueModel.php:137
 msgctxt "revenue-status"
 msgid "Paid"
 msgstr ""
 
-#: app/Hametuha/Sharee/Models/RevenueModel.php:116
+#: app/Hametuha/Sharee/Models/RevenueModel.php:138
 msgctxt "revenue-status"
 msgid "Rejected"
 msgstr ""
 
-#: app/Hametuha/Sharee/Models/RevenueModel.php:183
+#: app/Hametuha/Sharee/Models/RevenueModel.php:210
 msgid "Undefined"
 msgstr ""
 
-#: app/Hametuha/Sharee/Models/RevenueModel.php:243
+#: app/Hametuha/Sharee/Models/RevenueModel.php:274
 #, php-format
 msgid "Status changed %1$s to %2$s."
 msgstr ""
 
-#: app/Hametuha/Sharee/Rest/AccountApi.php:65
+#: app/Hametuha/Sharee/Rest/AccountApi.php:68
 msgid "Your bank account is valid."
 msgstr ""
 
-#: app/Hametuha/Sharee/Rest/AccountApi.php:66
+#: app/Hametuha/Sharee/Rest/AccountApi.php:69
 msgid "Your bank account is invalid. Please fill required information."
 msgstr ""
 
-#: app/Hametuha/Sharee/Rest/AccountApi.php:87
+#: app/Hametuha/Sharee/Rest/AccountApi.php:93
 msgid "Your bank account has been updated."
 msgstr ""
 
-#: app/Hametuha/Sharee/Rest/AddressApi.php:65
+#: app/Hametuha/Sharee/Rest/AddressApi.php:68
 msgid "Your billing address is valid."
 msgstr ""
 
-#: app/Hametuha/Sharee/Rest/AddressApi.php:66
+#: app/Hametuha/Sharee/Rest/AddressApi.php:69
 msgid "Your billing address is invalid. Please fill required information."
 msgstr ""
 
-#: app/Hametuha/Sharee/Rest/AddressApi.php:87
+#: app/Hametuha/Sharee/Rest/AddressApi.php:93
 msgid "Your billing information has been updated."
 msgstr ""
 
@@ -228,60 +234,60 @@ msgstr ""
 msgid "User Billing"
 msgstr ""
 
-#: app/Hametuha/Sharee/Screen/BillingList.php:56
+#: app/Hametuha/Sharee/Screen/BillingList.php:59
 msgid "Something is wrong on server. Please try again later."
 msgstr ""
 
-#: app/Hametuha/Sharee/Screen/BillingList.php:57
-#: app/Hametuha/Sharee/Screen/BillingList.php:117
+#: app/Hametuha/Sharee/Screen/BillingList.php:61
+#: app/Hametuha/Sharee/Screen/BillingList.php:155
 #, php-format
 msgid "Please specify transfer date in 4 digits: e.g. %s"
 msgstr ""
 
-#: app/Hametuha/Sharee/Screen/BillingList.php:67
-#: app/Hametuha/Sharee/Screen/BillingList.php:98
+#: app/Hametuha/Sharee/Screen/BillingList.php:72
+#: app/Hametuha/Sharee/Screen/BillingList.php:122
 msgid "Invalid Access"
 msgstr ""
 
-#: app/Hametuha/Sharee/Screen/BillingList.php:79
-#: app/Hametuha/Sharee/Screen/BillingList.php:113
+#: app/Hametuha/Sharee/Screen/BillingList.php:97
+#: app/Hametuha/Sharee/Screen/BillingList.php:150
 msgid "No billing found."
 msgstr ""
 
-#: app/Hametuha/Sharee/Screen/BillingList.php:83
+#: app/Hametuha/Sharee/Screen/BillingList.php:103
 #, php-format
 msgid "%s fixed. Reload window."
 msgstr ""
 
-#: app/Hametuha/Sharee/Screen/BillingList.php:83
+#: app/Hametuha/Sharee/Screen/BillingList.php:103
 #, php-format
 msgid "%d record is"
 msgid_plural "%d records are"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/Hametuha/Sharee/Screen/BillingList.php:105
+#: app/Hametuha/Sharee/Screen/BillingList.php:133
 #, php-format
-msgid "Please specify year and month. %s-%s"
+msgid "Please specify year and month. %1$s-%2$s"
 msgstr ""
 
-#: app/Hametuha/Sharee/Screen/BillingList.php:173
+#: app/Hametuha/Sharee/Screen/BillingList.php:214
 #: app/Hametuha/Sharee/Screen/RewardList.php:36
 msgid "Summary of Current Criteria"
 msgstr ""
 
-#: app/Hametuha/Sharee/Screen/BillingList.php:176
+#: app/Hametuha/Sharee/Screen/BillingList.php:217
 #: app/Hametuha/Sharee/Screen/RewardList.php:40
 msgid "Found Count"
 msgstr ""
 
-#: app/Hametuha/Sharee/Screen/BillingList.php:177
+#: app/Hametuha/Sharee/Screen/BillingList.php:218
 #: app/Hametuha/Sharee/Screen/RewardList.php:44
-#: app/Hametuha/Sharee/Table/BillingListTable.php:61
+#: app/Hametuha/Sharee/Table/BillingListTable.php:63
 msgid "Deducting"
 msgstr ""
 
-#: app/Hametuha/Sharee/Screen/BillingList.php:178
+#: app/Hametuha/Sharee/Screen/BillingList.php:219
 msgid "Total Amount"
 msgstr ""
 
@@ -290,7 +296,7 @@ msgid "User Rewards"
 msgstr ""
 
 #: app/Hametuha/Sharee/Screen/RewardList.php:41
-#: app/Hametuha/Sharee/Table/RewardListTable.php:41
+#: app/Hametuha/Sharee/Table/RewardListTable.php:43
 msgid "Sales"
 msgstr ""
 
@@ -303,7 +309,7 @@ msgid "Tax"
 msgstr ""
 
 #: app/Hametuha/Sharee/Screen/RewardList.php:45
-#: app/Hametuha/Sharee/Table/RewardListTable.php:42
+#: app/Hametuha/Sharee/Table/RewardListTable.php:44
 msgid "Subtotal"
 msgstr ""
 
@@ -315,45 +321,45 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/BillingListTable.php:59
+#: app/Hametuha/Sharee/Table/BillingListTable.php:61
 msgid "User"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/BillingListTable.php:62
+#: app/Hametuha/Sharee/Table/BillingListTable.php:64
 msgid "Transfer Amount"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/BillingListTable.php:73
+#: app/Hametuha/Sharee/Table/BillingListTable.php:75
 msgid "Mark as paid"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/BillingListTable.php:74
+#: app/Hametuha/Sharee/Table/BillingListTable.php:76
 msgid "Download CSV"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/BillingListTable.php:132
-#: app/Hametuha/Sharee/Table/RewardListTable.php:101
+#: app/Hametuha/Sharee/Table/BillingListTable.php:136
+#: app/Hametuha/Sharee/Table/RewardListTable.php:107
 msgid "Deleted User"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/RewardListTable.php:40
+#: app/Hametuha/Sharee/Table/RewardListTable.php:42
 msgid "Label"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/RewardListTable.php:43
+#: app/Hametuha/Sharee/Table/RewardListTable.php:45
 msgid "Status"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/RewardListTable.php:44
+#: app/Hametuha/Sharee/Table/RewardListTable.php:46
 msgid "Date"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/RewardListTable.php:95
+#: app/Hametuha/Sharee/Table/RewardListTable.php:101
 msgctxt "post_object"
 msgid "Deleted"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/RewardListTable.php:165
+#: app/Hametuha/Sharee/Table/RewardListTable.php:173
 msgid "All Status"
 msgstr ""
 
@@ -361,16 +367,16 @@ msgstr ""
 msgid "Every Year"
 msgstr ""
 
-#: app/Hametuha/Sharee/Utilities/TableHelper.php:56
+#: app/Hametuha/Sharee/Utilities/TableHelper.php:60
 #, php-format
 msgctxt "year"
 msgid "%04d"
 msgstr ""
 
-#: app/Hametuha/Sharee/Utilities/TableHelper.php:60
+#: app/Hametuha/Sharee/Utilities/TableHelper.php:67
 msgid "Every Months"
 msgstr ""
 
-#: app/Hametuha/Sharee/Utilities/TableHelper.php:67
+#: app/Hametuha/Sharee/Utilities/TableHelper.php:74
 msgid "Filter"
 msgstr ""

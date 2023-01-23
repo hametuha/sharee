@@ -1,4 +1,5 @@
-# Sharee
+# Sharēe
+
 WordPress library for Reward manager.
 
 ## Installation

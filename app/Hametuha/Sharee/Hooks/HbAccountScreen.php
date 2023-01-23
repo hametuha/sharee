@@ -255,8 +255,11 @@ class HbAccountScreen extends Singleton {
 					$col         = 2;
 					break;
 				case 'number':
-					$row = 'close';
-					$col = 2;
+					$row         = 'close';
+					$col         = 2;
+					$optional    = true;
+					$placeholder = 'T0000000000000';
+					$description = _x( 'If you have a valid tax number, please input.', 'tax-number-detail', 'sharee' );
 					break;
 				case 'address':
 					$placeholder = __( 'e.g. Minami Aoyama 2-11-13, Minatoku Tokyo', 'sharee' );
