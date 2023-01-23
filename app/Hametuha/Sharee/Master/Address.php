@@ -28,10 +28,7 @@ class Address extends MetaMaster {
 				'required' => true,
 			],
 			'number'   => [
-				'label'    => __( 'Tax Number', 'sharee' ),
-				'callback' => function( $var ) {
-					return is_numeric( $var ) || empty( $var );
-				},
+				'label' => __( 'Tax Number', 'sharee' ),
 			],
 			'address'  => [
 				'label'   => __( 'Address', 'sharee' ),

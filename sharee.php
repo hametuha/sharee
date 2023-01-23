@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Sharē
+ * Plugin Name: Sharēe
  * Plugin URI:  https://github.com/hametuha/sharee
  * Description: User reward manager for WordPress
  * Version:     nightly
@@ -30,3 +30,11 @@ add_filter( 'sharee_should_enable', function( $enabled, $service ) {
 			return $enabled;
 	}
 }, 10, 2 );
+
+// If hashboard exists, enable it.
+add_action( 'plugins_loaded', function() {
+	if ( class_exists( 'Hametuha\\Hashboard' ) ) {
+		Hametuha\Hashboard::get_instance();
+		define( 'HASHBOARD', Hametuha\Hashboard::version() );
+	}
+} );
