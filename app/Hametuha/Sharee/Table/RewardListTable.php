@@ -21,8 +21,10 @@ class RewardListTable extends \WP_List_Table {
 	 */
 	public $summary = null;
 
-
-	function __construct() {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function __construct() {
 		parent::__construct(
 			array(
 				'singular' => 'user_reward',

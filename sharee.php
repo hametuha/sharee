@@ -38,3 +38,13 @@ add_action( 'plugins_loaded', function() {
 		define( 'HASHBOARD', Hametuha\Hashboard::version() );
 	}
 } );
+
+/**
+ * Add labels.
+ */
+add_filter( 'sharee_labels', function(  ) {
+	return [
+		'writing' => 'Writing',
+		'other'   => 'Other',
+	];
+} );

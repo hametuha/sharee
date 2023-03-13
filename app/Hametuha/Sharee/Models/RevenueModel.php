@@ -561,7 +561,7 @@ SQL;
 	 * @param bool  $only_with_deducting Choose only deducting.
 	 * @return array
 	 */
-	public function get_fixed_billing( $year, $month = 0, $types = [], $only_with_deducting = false ) {
+	public function get_fixed_billing( $year, $month = 0, $types = [], $only_with_deducting = false, $user_id = 0 ) {
 		$wheres = [];
 		if ( $month ) {
 			// Search with year month.
@@ -587,6 +587,9 @@ SQL;
 		}
 		if ( $only_with_deducting ) {
 			$wheres[] = $this->db->prepare( '( deducting > %d )', 0 );
+		}
+		if ( $user_id ) {
+			$wheres[] = $this->db->prepare( '( object_id = %d )', $user_id );
 		}
 		$wheres = 'WHERE ' . implode( ' AND ', $wheres );
 		$query  = <<<SQL
@@ -618,12 +621,15 @@ SQL;
 			$wheres[] = sprintf( '(r.object_id = %d)', $user_id );
 		}
 		$wheres[] = '( r.status = 1 )';
-		$wheres[] = sprintf( '( EXTRACT(YEAR from r.fixed) = %04d )', $year );
-		$wheres   = ' WHERE ' . implode( ' AND ', $wheres );
-		$query    = <<<SQL
+		if ( 'all' !== $year ) {
+			$wheres[] = sprintf( '( EXTRACT(YEAR from r.fixed) = %04d )', $year );
+		}
+		$wheres = ' WHERE ' . implode( ' AND ', $wheres );
+		$query  = <<<SQL
 			SELECT
 				SUM(r.total) AS total,
 				SUM(r.deducting) AS deducting,
+				SUM(r.tax) AS tax,
 				r.object_id AS user_id,
 				u.display_name,
 				fixed

@@ -1,3 +1,3 @@
-.label-default{color:lightgray}.label-warning{color:orange}.label-success{color:green}.sharee-summary-table{margin:20px 0;font-size:12px;border-collapse:collapse}.sharee-summary-table th,.sharee-summary-table td{padding:0.5em;border:1px solid #ddd}.sharee-summary-table .number{text-align:right}.sharee-summary-table caption{text-align:left}th.column-deducting,th.column-total,td.column-deducting,td.column-total{text-align:right}
+.label-default{color:lightgray}.label-warning{color:orange}.label-success{color:green}.sharee-summary-table{margin:20px 0;font-size:12px;border-collapse:collapse}.sharee-summary-table th,.sharee-summary-table td{padding:0.5em;border:1px solid #ddd}.sharee-summary-table .number{text-align:right}.sharee-summary-table caption{text-align:left}th.column-deducting,th.column-vat,th.column-tax,th.column-total,td.column-deducting,td.column-vat,td.column-tax,td.column-total{text-align:right}
 
 /*# sourceMappingURL=map/admin.css.map */

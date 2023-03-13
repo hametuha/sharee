@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Sharee\n"
-"POT-Creation-Date: 2023-01-23 11:40+0900\n"
+"POT-Creation-Date: 2023-03-13 16:09+0900\n"
 "PO-Revision-Date: 2017-01-19 18:39+0900\n"
 "Last-Translator: Takahashi Fumiki <takahashi.fumiki@hametuha.co.jp>\n"
 "Language-Team: Hametuha INC. <takahashi.fumiki@hametuha.co.jp>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
@@ -153,32 +153,32 @@ msgstr ""
 msgid "Tax Number"
 msgstr ""
 
-#: app/Hametuha/Sharee/Master/Address.php:37
+#: app/Hametuha/Sharee/Master/Address.php:34
 msgid "Address"
 msgstr ""
 
-#: app/Hametuha/Sharee/Master/Address.php:41
+#: app/Hametuha/Sharee/Master/Address.php:38
 msgid "Building"
 msgstr ""
 
-#: app/Hametuha/Sharee/Master/Address.php:45
+#: app/Hametuha/Sharee/Master/Address.php:42
 msgid "Zip Code"
 msgstr ""
 
-#: app/Hametuha/Sharee/Master/Address.php:48
+#: app/Hametuha/Sharee/Master/Address.php:45
 #, php-format
 msgid "Invalid format: %s Only number and hyphen is available."
 msgstr ""
 
-#: app/Hametuha/Sharee/Master/Address.php:52
+#: app/Hametuha/Sharee/Master/Address.php:49
 msgid "Country"
 msgstr ""
 
-#: app/Hametuha/Sharee/Master/Address.php:55
+#: app/Hametuha/Sharee/Master/Address.php:52
 msgid "Tel"
 msgstr ""
 
-#: app/Hametuha/Sharee/Master/Address.php:58
+#: app/Hametuha/Sharee/Master/Address.php:55
 msgid "Invalid format. Only number, +, and hyphen(-) is available."
 msgstr ""
 
@@ -284,6 +284,7 @@ msgstr ""
 #: app/Hametuha/Sharee/Screen/BillingList.php:218
 #: app/Hametuha/Sharee/Screen/RewardList.php:44
 #: app/Hametuha/Sharee/Table/BillingListTable.php:63
+#: app/Hametuha/Sharee/Table/PaymentListTable.php:46
 msgid "Deducting"
 msgstr ""
 
@@ -291,12 +292,16 @@ msgstr ""
 msgid "Total Amount"
 msgstr ""
 
+#: app/Hametuha/Sharee/Screen/PaymentList.php:25
+msgid "Payment History"
+msgstr ""
+
 #: app/Hametuha/Sharee/Screen/RewardList.php:26
 msgid "User Rewards"
 msgstr ""
 
 #: app/Hametuha/Sharee/Screen/RewardList.php:41
-#: app/Hametuha/Sharee/Table/RewardListTable.php:43
+#: app/Hametuha/Sharee/Table/RewardListTable.php:45
 msgid "Sales"
 msgstr ""
 
@@ -309,7 +314,8 @@ msgid "Tax"
 msgstr ""
 
 #: app/Hametuha/Sharee/Screen/RewardList.php:45
-#: app/Hametuha/Sharee/Table/RewardListTable.php:44
+#: app/Hametuha/Sharee/Table/PaymentListTable.php:45
+#: app/Hametuha/Sharee/Table/RewardListTable.php:46
 msgid "Subtotal"
 msgstr ""
 
@@ -322,6 +328,7 @@ msgid "Average"
 msgstr ""
 
 #: app/Hametuha/Sharee/Table/BillingListTable.php:61
+#: app/Hametuha/Sharee/Table/PaymentListTable.php:44
 msgid "User"
 msgstr ""
 
@@ -338,45 +345,57 @@ msgid "Download CSV"
 msgstr ""
 
 #: app/Hametuha/Sharee/Table/BillingListTable.php:136
-#: app/Hametuha/Sharee/Table/RewardListTable.php:107
+#: app/Hametuha/Sharee/Table/RewardListTable.php:109
 msgid "Deleted User"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/RewardListTable.php:42
+#: app/Hametuha/Sharee/Table/PaymentListTable.php:47
+msgid "VAT"
+msgstr ""
+
+#: app/Hametuha/Sharee/Table/PaymentListTable.php:48
+msgid "Payed At"
+msgstr ""
+
+#: app/Hametuha/Sharee/Table/PaymentListTable.php:123
+msgid "User ID"
+msgstr ""
+
+#: app/Hametuha/Sharee/Table/RewardListTable.php:44
 msgid "Label"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/RewardListTable.php:45
+#: app/Hametuha/Sharee/Table/RewardListTable.php:47
 msgid "Status"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/RewardListTable.php:46
+#: app/Hametuha/Sharee/Table/RewardListTable.php:48
 msgid "Date"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/RewardListTable.php:101
+#: app/Hametuha/Sharee/Table/RewardListTable.php:103
 msgctxt "post_object"
 msgid "Deleted"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/RewardListTable.php:173
+#: app/Hametuha/Sharee/Table/RewardListTable.php:175
 msgid "All Status"
 msgstr ""
 
-#: app/Hametuha/Sharee/Utilities/TableHelper.php:54
+#: app/Hametuha/Sharee/Utilities/TableHelper.php:58
 msgid "Every Year"
 msgstr ""
 
-#: app/Hametuha/Sharee/Utilities/TableHelper.php:60
+#: app/Hametuha/Sharee/Utilities/TableHelper.php:64
 #, php-format
 msgctxt "year"
 msgid "%04d"
 msgstr ""
 
-#: app/Hametuha/Sharee/Utilities/TableHelper.php:67
+#: app/Hametuha/Sharee/Utilities/TableHelper.php:72
 msgid "Every Months"
 msgstr ""
 
-#: app/Hametuha/Sharee/Utilities/TableHelper.php:74
+#: app/Hametuha/Sharee/Utilities/TableHelper.php:80
 msgid "Filter"
 msgstr ""
