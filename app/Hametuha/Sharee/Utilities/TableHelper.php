@@ -34,19 +34,23 @@ trait TableHelper {
 		if ( ! is_numeric( $month ) ) {
 			$month = 0;
 		}
+		$user = filter_input( INPUT_GET, 'user_id' ) ?: 0;
 		return [
 			$status,
 			$year,
 			$month,
 			$type,
 			max( 1, $this->get_pagenum() ),
+			$user,
 		];
 	}
 
 	/**
 	 * Display filter input element
+	 *
+	 * @param bool $with_month If false, no month selector.
 	 */
-	protected function filter_inputs() {
+	protected function filter_inputs( $with_month = true ) {
 		$model = RevenueModel::get_instance();
 		list( $status, $year, $month, $type, $page_num ) = $this->get_current_properties();
 		?>
@@ -63,6 +67,7 @@ trait TableHelper {
 				</option>
 			<?php endforeach; ?>
 		</select>
+		<?php if ( $with_month ) : ?>
 		<select name="monthnum">
 			<option value="all"<?php selected( 'all', $month ); ?>><?php esc_html_e( 'Every Months', 'sharee' ); ?></option>
 			<?php for ( $i = 1; $i <= 12; $i ++ ) : ?>
@@ -71,8 +76,8 @@ trait TableHelper {
 				</option>
 			<?php endfor; ?>
 		</select>
+		<?php endif; ?>
 		<input type="submit" class="button" value="<?php esc_attr_e( 'Filter', 'sharee' ); ?>" />
 		<?php
 	}
-
 }

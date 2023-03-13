@@ -25,6 +25,13 @@ class Sharee extends Singleton {
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 		// Register autoloader
 		add_action( 'after_setup_theme', [ $this, 'after_setup_theme' ] );
+		// Register command
+		if ( defined( 'WP_CLI' ) && \WP_CLI ) {
+			\WP_CLI::add_command( 'sharee', Command::class );
+			if ( class_exists( 'Hametuha\Sharee\Tests\StubCommands' ) ) {
+				\WP_CLI::add_command( 'sharee-test', \Hametuha\Sharee\Tests\StubCommands::class );
+			}
+		}
 	}
 
 	/**
@@ -66,11 +73,6 @@ class Sharee extends Singleton {
 				}
 				call_user_func( [ $class_name, 'get_instance' ] );
 			}
-		}
-
-		// Register command
-		if ( defined( 'WP_CLI' ) && \WP_CLI ) {
-			\WP_CLI::add_command( 'sharee', Command::class );
 		}
 	}
 

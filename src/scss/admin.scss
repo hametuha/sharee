@@ -30,7 +30,9 @@
 
 th,td{
   &.column-deducting,
-  &.column-total{
+  &.column-vat,
+  &.column-tax,
+  &.column-total {
     text-align: right;
   }
 }
