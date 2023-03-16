@@ -1,4 +1,4 @@
-# Sharēe
+# Sharē
 
 WordPress library for Reward manager.
 

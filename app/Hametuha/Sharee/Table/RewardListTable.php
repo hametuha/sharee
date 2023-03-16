@@ -60,12 +60,12 @@ class RewardListTable extends \WP_List_Table {
 			$this->get_sortable_columns(),
 		];
 		// Search revenues.
-		list( $status, $year, $monthnum, $type, $page_num ) = $this->get_current_properties();
+		list( $status, $year, $monthnum, $type, $page_num, $user_id ) = $this->get_current_properties();
 		$model       = RevenueModel::get_instance();
 		$search_args = [
 			'year'      => $year,
 			'month'     => $monthnum,
-			'object_id' => (int) filter_input( INPUT_GET, 'object_id' ),
+			'object_id' => (int) $user_id,
 			'status'    => $status,
 			'type'      => $type,
 			'per_page'  => 20,
@@ -179,6 +179,7 @@ class RewardListTable extends \WP_List_Table {
 				</option>
 			<?php endforeach; ?>
 		</select>
+		<input name="user_id" style="width: 7em;" type="text" placeholder="<?php esc_attr_e( 'User ID', 'sharee' ); ?>" value="<?php echo esc_attr( filter_input( INPUT_GET, 'user_id' ) ?: '' ); ?>" />
 		<?php $this->filter_inputs(); ?>
 		<?php
 	}
