@@ -86,7 +86,7 @@ class Address extends MetaMaster {
 	 */
 	public function validate() {
 		$valid = true;
-		foreach ( [ 'zip', 'address', 'name', 'number' ] as $key ) {
+		foreach ( [ 'zip', 'address', 'name' ] as $key ) {
 			if ( ! $this->data[ $key ] ) {
 				$valid = false;
 				break;
