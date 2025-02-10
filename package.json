@@ -1,70 +1,73 @@
 {
-  "name": "sharee",
-  "main": "gulpfile.js",
-  "engines": {
-    "node": ">=14.x"
-  },
-  "scripts": {
-    "start": "wp-env start",
-    "stop": "wp-env stop",
-    "start:debug": "wp-env start --xdebug",
-    "update": "wp-env start --update",
-    "env": "wp-env",
-    "cli": "wp-env run cli wp",
-    "test": "echo no JS test.",
-    "watch": "gulp watch",
-    "package": "gulp build",
-    "gulp": "gulp",
-    "gulp:task": "gulp --task",
-    "fix": "eslint --fix src/js",
-    "lint": "gulp eslint"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hametuha/sharee.git"
-  },
-  "keywords": [
-    "wordpress"
-  ],
-  "author": "Hametuha INC",
-  "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/hametuha/sharee/issues"
-  },
-  "homepage": "https://github.com/hametuha/sharee#readme",
-  "devDependencies": {
-    "@wordpress/env": "^5.10.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.6",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2015": "^6.24.1",
-    "eslint": "^5.4.0",
-    "eslint-config-wordpress": "^2.0.0",
-    "event-stream": "^3.3.2",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^5.0.0",
-    "gulp-babel": "^7.0.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-eslint": "^5.0.0",
-    "gulp-filter": "^5.1",
-    "gulp-imagemin": "^4.1",
-    "gulp-jshint": "^2.0",
-    "gulp-load-plugins": "^1.2",
-    "gulp-notify": "^3.2.0",
-    "gulp-pleeease": "^2.0",
-    "gulp-plumber": "^1.0.0",
-    "gulp-sass": "^4.0",
-    "gulp-sass-bulk-import": "^1.0",
-    "gulp-sourcemaps": "^2.6",
-    "gulp-uglify": "^3.0",
-    "gulp-util": "^3.0",
-    "html5shiv": "^3.7.3",
-    "imagemin-pngquant": "^6.0",
-    "jshint": "^2.13.6",
-    "jshint-stylish": "^2.0",
-    "lodash": "^4.2.1",
-    "popper.js": "^1.14.4",
-    "select2": "^4.0.6-rc.1",
-    "select2-bootstrap4-theme": "^1.0.0"
-  }
+	"name": "sharee",
+	"main": "gulpfile.js",
+	"engines": {
+		"node": ">=14.x"
+	},
+	"scripts": {
+		"start": "wp-env start",
+		"stop": "wp-env stop",
+		"start:debug": "wp-env start --xdebug",
+		"update": "wp-env start --update",
+		"env": "wp-env",
+		"cli": "wp-env run cli wp",
+		"test": "RESULT=${PWD##*/} && wp-env run tests-cli ./wp-content/plugins/$RESULT/vendor/bin/phpunit -c ./wp-content/plugins/$RESULT/phpunit.xml",
+		"watch": "gulp watch",
+		"package": "gulp build",
+		"gulp": "gulp",
+		"gulp:task": "gulp --task",
+		"fix": "eslint --fix src/js",
+		"lint": "gulp eslint"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/hametuha/sharee.git"
+	},
+	"keywords": [
+		"wordpress"
+	],
+	"author": "Hametuha INC",
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://github.com/hametuha/sharee/issues"
+	},
+	"homepage": "https://github.com/hametuha/sharee#readme",
+	"devDependencies": {
+		"@wordpress/env": "^9.0.0",
+		"babel-core": "^6.26.0",
+		"babel-eslint": "^8.2.6",
+		"babel-preset-env": "^1.7.0",
+		"babel-preset-es2015": "^6.24.1",
+		"eslint": "^5.4.0",
+		"eslint-config-wordpress": "^2.0.0",
+		"event-stream": "^3.3.2",
+		"gulp": "^4.0.2",
+		"gulp-autoprefixer": "^5.0.0",
+		"gulp-babel": "^7.0.0",
+		"gulp-concat": "^2.6.0",
+		"gulp-eslint": "^5.0.0",
+		"gulp-filter": "^5.1",
+		"gulp-imagemin": "^4.1",
+		"gulp-jshint": "^2.0",
+		"gulp-load-plugins": "^1.2",
+		"gulp-notify": "^3.2.0",
+		"gulp-pleeease": "^2.0",
+		"gulp-plumber": "^1.0.0",
+		"gulp-sass": "^4.0",
+		"gulp-sass-bulk-import": "^1.0",
+		"gulp-sourcemaps": "^2.6",
+		"gulp-uglify": "^3.0",
+		"gulp-util": "^3.0",
+		"html5shiv": "^3.7.3",
+		"imagemin-pngquant": "^6.0",
+		"jshint": "^2.13.6",
+		"jshint-stylish": "^2.0",
+		"lodash": "^4.2.1",
+		"popper.js": "^1.14.4",
+		"select2": "^4.0.6-rc.1",
+		"select2-bootstrap4-theme": "^1.0.0"
+	},
+	"volta": {
+		"node": "14.21.3"
+	}
 }

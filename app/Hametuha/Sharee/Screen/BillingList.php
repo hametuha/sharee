@@ -72,7 +72,7 @@ class BillingList extends TableScreen {
 				throw new \Exception( __( 'Invalid Access', 'sharee' ), 401 );
 			}
 			list( $year, $month ) = array_map(
-				function( $key ) {
+				function ( $key ) {
 					$var = filter_input( INPUT_POST, $key );
 					return is_numeric( $var ) ? (int) $var : 0;
 				},
@@ -122,7 +122,7 @@ class BillingList extends TableScreen {
 				throw new \Exception( __( 'Invalid Access', 'sharee' ), 401 );
 			}
 			list( $year, $month ) = array_map(
-				function( $key ) {
+				function ( $key ) {
 					$var = filter_input( INPUT_POST, $key );
 					return is_numeric( $var ) ? (int) $var : 0;
 				},
@@ -250,6 +250,4 @@ HTML;
 		</div>
 		<?php
 	}
-
-
 }

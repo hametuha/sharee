@@ -28,7 +28,7 @@ class Account extends MetaMaster {
 			'group_code'  => [
 				'label'    => __( 'Bank Code', 'sharee' ),
 				'required' => true,
-				'callback' => function( $var ) {
+				'callback' => function ( $var ) {
 					return is_numeric( $var );
 				},
 			],
@@ -39,7 +39,7 @@ class Account extends MetaMaster {
 			'branch_code' => [
 				'label'    => __( 'Branch Code', 'sharee' ),
 				'required' => true,
-				'callback' => function( $var ) {
+				'callback' => function ( $var ) {
 					return is_numeric( $var );
 				},
 			],
@@ -52,7 +52,7 @@ class Account extends MetaMaster {
 			'number'      => [
 				'label'    => __( 'Account Number', 'sharee' ),
 				'required' => true,
-				'callback' => function( $var ) {
+				'callback' => function ( $var ) {
 					return is_numeric( $var );
 				},
 			],
@@ -94,9 +94,8 @@ class Account extends MetaMaster {
 		return implode( ' ', $values );
 	}
 
-
 	/**
-	 * Check if object if valid.
+	 * Check if object is valid.
 	 *
 	 * @return bool
 	 */

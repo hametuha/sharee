@@ -102,7 +102,7 @@ class Sharee extends Singleton {
 	 * @param string $service
 	 * @return bool
 	 */
-	static public function should_enable( $service ) {
+	public static function should_enable( $service ) {
 		return (bool) apply_filters( 'sharee_should_enable', false, $service );
 	}
 
@@ -116,7 +116,7 @@ class Sharee extends Singleton {
 	public function __get( $name ) {
 		switch ( $name ) {
 			case 'root_dir':
-				return dirname( dirname( __DIR__ ) );
+				return dirname( __DIR__, 2 );
 				break;
 			case 'root_url':
 				return str_replace( ABSPATH, home_url( '/' ), $this->root_dir );
@@ -126,5 +126,4 @@ class Sharee extends Singleton {
 				break;
 		}
 	}
-
 }

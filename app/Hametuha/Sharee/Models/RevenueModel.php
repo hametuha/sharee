@@ -334,7 +334,7 @@ SQL;
 				implode(
 					', ',
 					array_map(
-						function( $t ) {
+						function ( $t ) {
 							return $this->db->prepare( '%s', $t );
 						},
 						$type
@@ -468,7 +468,7 @@ SQL;
 				implode(
 					', ',
 					array_map(
-						function( $type ) {
+						function ( $type ) {
 							return $this->db->prepare( '%s', $type );
 						},
 						$types
@@ -537,7 +537,7 @@ SQL;
 			// todo: Should capable to change billing method.
 			$this->revenue_meta->bulk_insert(
 				array_map(
-					function( $revenue_id ) {
+					function ( $revenue_id ) {
 						return [
 							'key'        => 'billing_method',
 							'revenue_id' => $revenue_id,
@@ -577,7 +577,7 @@ SQL;
 				implode(
 					', ',
 					array_map(
-						function( $type ) {
+						function ( $type ) {
 							return $this->db->prepare( '%s', $type );
 						},
 						$types
@@ -672,7 +672,7 @@ SQL;
 			->where_in( 'meta_key', [ '_billing_name', '_billing_number', '_billing_address' ] )
 			->result();
 		return array_map(
-			function( $user ) use ( $metas ) {
+			function ( $user ) use ( $metas ) {
 				$user->my_number = '';
 				$user->address   = '';
 				foreach ( $metas as $row ) {
@@ -721,7 +721,7 @@ SQL;
 	 * @return string
 	 */
 	public function format( $price ) {
-		return apply_filters( 'sharee_price_formatting', sprintf( '&yen; %s', number_format( $price ) ), $price );
+		return apply_filters( 'sharee_price_formatting', sprintf( '&yen; %s', number_format( (float) $price ) ), $price );
 	}
 
 

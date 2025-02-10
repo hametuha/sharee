@@ -305,5 +305,4 @@ class HbAccountScreen extends Singleton {
 		];
 		return $args;
 	}
-
 }

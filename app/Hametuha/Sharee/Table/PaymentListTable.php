@@ -105,7 +105,7 @@ class PaymentListTable extends \WP_List_Table {
 	protected function get_table_classes() {
 		return array_filter(
 			parent::get_table_classes(),
-			function( $c ) {
+			function ( $c ) {
 				return 'fixed' !== $c;
 			}
 		);
@@ -133,5 +133,4 @@ class PaymentListTable extends \WP_List_Table {
 	public function total_record() {
 		return (int) $this->_pagination_args['total_items'];
 	}
-
 }

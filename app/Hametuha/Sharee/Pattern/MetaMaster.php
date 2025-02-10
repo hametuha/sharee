@@ -147,5 +147,4 @@ abstract class MetaMaster implements RestResultObject {
 		$self = new static( 0 );
 		return $self->get_setting();
 	}
-
 }
