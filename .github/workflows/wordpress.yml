@@ -93,7 +93,6 @@ jobs:
         with:
           jobs: ${{ toJSON(needs) }}
 
-
   release:
     name: Release build
     needs: [ status-check ]

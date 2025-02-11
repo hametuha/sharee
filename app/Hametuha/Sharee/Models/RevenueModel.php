@@ -621,7 +621,7 @@ SQL;
 			$wheres[] = sprintf( '(r.object_id = %d)', $user_id );
 		}
 		$wheres[] = '( r.status = 1 )';
-		if ( 'all' !== $year ) {
+		if ( $year && is_numeric( $year ) ) {
 			$wheres[] = sprintf( '( EXTRACT(YEAR from r.fixed) = %04d )', $year );
 		}
 		$wheres = ' WHERE ' . implode( ' AND ', $wheres );
@@ -735,16 +735,12 @@ SQL;
 		switch ( $name ) {
 			case 'label':
 				return $this->get_labels();
-				break;
 			case 'status':
 				return $this->get_status();
-				break;
 			case 'status_class':
 				return $this->get_status_class();
-				break;
 			default:
 				return parent::__get( $name );
-				break;
 		}
 	}
 }

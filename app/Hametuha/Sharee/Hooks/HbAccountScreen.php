@@ -4,7 +4,7 @@ namespace Hametuha\Sharee\Hooks;
 
 
 use Hametuha\Hashboard;
-use Hametuha\Pattern\Singleton;
+use Hametuha\SingletonPattern\Singleton;
 use Hametuha\Sharee;
 use Hametuha\Sharee\Master\Account;
 use Hametuha\Sharee\Master\Address;
