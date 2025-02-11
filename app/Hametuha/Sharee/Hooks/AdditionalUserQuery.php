@@ -124,7 +124,7 @@ class AdditionalUserQuery extends Singleton {
 		// If this is admin screen, check the input.
 		if ( is_admin() ) {
 			$screen = get_current_screen();
-			if ( 'users' == $screen->base && current_user_can( 'list_users' ) ) {
+			if ( 'users' === $screen->base && current_user_can( 'list_users' ) ) {
 				// This is user list.
 				$paid_since = filter_input( INPUT_GET, 'paid_since' );
 				$paid_until = filter_input( INPUT_GET, 'paid_until' );
