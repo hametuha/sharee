@@ -50,10 +50,10 @@ class AdditionalUserQuery extends Singleton {
 			// No period. Do nothing.
 			return;
 		}
-		// Add DISTINCT to avoid duplicate user.
-    	if ( ! preg_match( '/\bDISTINCT\b/i', $query->query_fields ) ) {
+		// Add DISTINCT to avoid duplicated user by LEFT JOIN.
+		if ( ! preg_match( '/\bDISTINCT\b/i', $query->query_fields ) ) {
 			// SQL_CALC_FOUND_ROWS is not compatible with DISTINCT.
-			$query->query_fields = preg_replace('/\bsql_calc_found_rows\b/i', 'SQL_CALC_FOUND_ROWS DISTINCT', $query->query_fields, 1);
+			$query->query_fields = preg_replace( '/\bsql_calc_found_rows\b/i', 'SQL_CALC_FOUND_ROWS DISTINCT', $query->query_fields, 1 );
 		} else {
 			$query->query_fields = 'DISTINCT ' . $query->query_fields;
 		}
@@ -61,11 +61,11 @@ class AdditionalUserQuery extends Singleton {
 		$query->query_from .= " LEFT JOIN {$this->model()->table} AS ur ON ur.object_id = {$this->model()->db->users}.ID";
 		// Add where clause to filter by paid date.
 		if ( $since && $until ) {
-			$query->query_where .= $this->model()->db->prepare( " AND ur.fixed BETWEEN %s AND %s", $since, $until );
+			$query->query_where .= $this->model()->db->prepare( ' AND ur.fixed BETWEEN %s AND %s', $since, $until );
 		} elseif ( $since ) {
-			$query->query_where .= $this->model()->db->prepare( " AND ur.fixed >= %s", $since, $until );
+			$query->query_where .= $this->model()->db->prepare( ' AND ur.fixed >= %s', $since, $until );
 		} else {
-			$query->query_where .= $this->model()->db->prepare( " AND ur.fixed <= %s", $since, $until );
+			$query->query_where .= $this->model()->db->prepare( ' AND ur.fixed <= %s', $since, $until );
 		}
 	}
 
@@ -93,7 +93,7 @@ class AdditionalUserQuery extends Singleton {
 			}
 			// If this is year-month format, add day.
 			if ( preg_match( '/^\d{4}-\d{2}$/', $date_string ) ) {
-				$date_string = (new \DateTime( $date_string . '-01', wp_timezone() ) )->format( $format );
+				$date_string = ( new \DateTime( $date_string . '-01', wp_timezone() ) )->format( $format );
 			}
 			// If this is date format, add time.
 			if ( preg_match( '/^\d{4}-\d{2}-\d{2}$/', $date_string ) ) {
@@ -153,8 +153,6 @@ class AdditionalUserQuery extends Singleton {
 
 		<label for="paid_until"><?php echo esc_html_x( 'Until', 'paid-period', 'sharee' ); ?></label>
 		<input type="date" name="paid_until" id="paid_until" value="<?php echo esc_attr( $paid_until ); ?>">
-
-		<button class="button"><?php esc_html_e( 'Filter' ); ?></button>
 		<?php
 	}
 }
