@@ -62,3 +62,22 @@ if ( $result && ! is_wp_error( $result ) ) {
 	$success++;
 }
 ```
+
+## Query User
+
+There are 2 additional query vars for user query.
+
+- `paid_since`: Filter users who has been paid since the date.
+- `paid_until`: Filter users who has been paid until the date.
+
+This works with `WP_User_Query`.
+
+```php
+$query = new WP_User_Query( [
+	'role'        => 'subscriber',
+	'paid_since'  => '2018-01-01',
+	'paid_until'  => '2018-12-31',
+	'number'      => 10,
+	'paged'       => 1,
+] );
+```

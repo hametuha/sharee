@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Sharee\n"
-"POT-Creation-Date: 2023-03-13 16:09+0900\n"
-"PO-Revision-Date: 2023-03-13 16:09+0900\n"
+"POT-Creation-Date: 2025-02-12 08:48+0900\n"
+"PO-Revision-Date: 2025-02-12 08:48+0900\n"
 "Last-Translator: Takahashi Fumiki <takahashi.fumiki@hametuha.co.jp>\n"
 "Language-Team: Hametuha INC. <takahashi.fumiki@hametuha.co.jp>\n"
 "Language: ja\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
@@ -21,6 +21,16 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 "X-Poedit-SearchPathExcluded-2: src\n"
 "X-Poedit-SearchPathExcluded-3: tests\n"
+
+#: app/Hametuha/Sharee/Hooks/AdditionalUserQuery.php:151
+msgctxt "paid-period"
+msgid "Paid since"
+msgstr "支払い時期"
+
+#: app/Hametuha/Sharee/Hooks/AdditionalUserQuery.php:154
+msgctxt "paid-period"
+msgid "Until"
+msgstr "〜"
 
 #: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:39
 msgid "Billing"
@@ -359,6 +369,7 @@ msgid "Payed At"
 msgstr "支払日"
 
 #: app/Hametuha/Sharee/Table/PaymentListTable.php:123
+#: app/Hametuha/Sharee/Table/RewardListTable.php:182
 msgid "User ID"
 msgstr "ユーザーID"
 

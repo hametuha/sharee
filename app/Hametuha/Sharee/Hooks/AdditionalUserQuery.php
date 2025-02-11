@@ -10,6 +10,8 @@ use Hametuha\SingletonPattern\Singleton;
  * Add additional user quer.
  *
  * Add user query to filter by payment history.
+ *
+ * @since 0.8.11
  */
 class AdditionalUserQuery extends Singleton {
 
