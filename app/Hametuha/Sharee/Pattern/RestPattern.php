@@ -64,7 +64,7 @@ abstract class RestPattern extends RestApi {
 			'user_id' => [
 				'type'              => 'int|string',
 				'required'          => true,
-				'validate_callback' => function( $var ) {
+				'validate_callback' => function ( $var ) {
 					return ( 'me' === $var ) || is_numeric( $var );
 				},
 				'description'       => 'User ID or "me".',

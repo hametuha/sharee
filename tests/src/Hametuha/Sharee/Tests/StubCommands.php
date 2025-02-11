@@ -46,13 +46,20 @@ class StubCommands extends \WP_CLI_Command {
 				$price     = $price + $tax;
 			}
 			$description = sprintf( 'Pay for %s', $faker->name() );
+			$status = random_int( 0, 2 ) - 1;
+			$today   = new \DateTime( 'now', wp_timezone() );
+			$today->sub( new \DateInterval( sprintf( 'P%dD', random_int( 1, 365*3 ) ) ) );
 			$args = [
 				'unit'        => random_int( 1, 5 ),
 				'tax'         => $tax,
 				'deducting'   => $deducting,
 				'description' => $description,
-				'status'      => 0,
+				'status'      => $status,
+				'created'     => $today->format( 'Y-m-d H:i:s' ),
 			];
+			if ( 1 === $status ) {
+				$args['fixed'] = current_time( 'mysql', true );
+			}
 			$result = $model->add_revenue( $type, $user_id, $price, $args );
 			if ( $result && ! is_wp_error( $result ) ) {
 				echo '.';

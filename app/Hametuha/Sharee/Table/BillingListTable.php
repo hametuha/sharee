@@ -20,7 +20,7 @@ class BillingListTable extends \WP_List_Table {
 
 	public $summary = null;
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct(
 			array(
 				'singular' => 'user_billing',
@@ -185,5 +185,4 @@ class BillingListTable extends \WP_List_Table {
 				break;
 		}
 	}
-
 }

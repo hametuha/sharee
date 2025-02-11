@@ -85,7 +85,7 @@ SQL;
 	public function add_multiple_meta( $revenue_id, $records ) {
 		return $this->bulk_insert(
 			array_map(
-				function( $record ) use ( $revenue_id ) {
+				function ( $record ) use ( $revenue_id ) {
 					list( $key, $value ) = $record;
 					if ( is_array( $value ) ) {
 						$value = serialize( $value );
@@ -132,5 +132,4 @@ SQL;
 	public function get_logs( $revene_id ) {
 		return $this->get_meta( $revene_id, 'log', true );
 	}
-
 }

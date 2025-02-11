@@ -40,7 +40,7 @@ class Address extends MetaMaster {
 			],
 			'zip'      => [
 				'label'    => __( 'Zip Code', 'sharee' ),
-				'callback' => function( $var ) {
+				'callback' => function ( $var ) {
 					// translators: %s is variable.
 					return preg_match( '#^[0-9\-]+$#u', $var ) ?: new \WP_Error( 'malformat', sprintf( __( 'Invalid format: %s Only number and hyphen is available.', 'sharee' ), $var ) );
 				},
@@ -51,7 +51,7 @@ class Address extends MetaMaster {
 			'tel'      => [
 				'label'    => __( 'Tel', 'sharee' ),
 				'type'     => 'tel',
-				'callback' => function( $var ) {
+				'callback' => function ( $var ) {
 					return preg_match( '#^[0-9\- +]*$#u', $var ) ?: new \WP_Error( 'malformat', __( 'Invalid format. Only number, +, and hyphen(-) is available.', 'sharee' ) );
 				},
 			],
@@ -94,5 +94,4 @@ class Address extends MetaMaster {
 		}
 		return (bool) apply_filters( 'sharee_validate_address', $valid, $this->object, $this->data );
 	}
-
 }

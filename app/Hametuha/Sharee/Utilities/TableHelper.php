@@ -70,7 +70,7 @@ trait TableHelper {
 		<?php if ( $with_month ) : ?>
 		<select name="monthnum">
 			<option value="all"<?php selected( 'all', $month ); ?>><?php esc_html_e( 'Every Months', 'sharee' ); ?></option>
-			<?php for ( $i = 1; $i <= 12; $i ++ ) : ?>
+			<?php for ( $i = 1; $i <= 12; $i++ ) : ?>
 				<option value="<?php echo $i; ?>"<?php selected( $i === (int) $month ); ?>>
 					<?php echo mysql2date( 'M', sprintf( '%04d-%02d-01', date_i18n( 'Y' ), $i ) ); ?>
 				</option>

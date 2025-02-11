@@ -121,7 +121,7 @@ class Command extends \WP_CLI_Command {
 		$done = 0;
 		foreach ( $user_query->get_results() as $user ) {
 			delete_user_meta( $user->ID, '_billing_number' );
-			$done++;
+			++$done;
 		}
 		\WP_CLI::success( sprintf( 'Deleted %d users tax number.', $done ) );
 	}
