@@ -1,0 +1,6 @@
+/*!
+ * Billing list helper
+ *
+ * @handle sharee-billing-list-helper
+ * @deps jquery
+ */

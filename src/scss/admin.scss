@@ -1,12 +1,18 @@
+/**
+ * Admin style
+ *
+ * @handle sharee-admin-style
+ */
+.label-default {
+  color: #d3d3d3;
+}
 
-.label-default{
-  color: lightgray;
+.label-warning {
+  color: #ffa500;
 }
-.label-warning{
-  color: orange;
-}
-.label-success{
-  color: green;
+
+.label-success {
+  color: #008000;
 }
 
 
@@ -14,21 +20,23 @@
   margin: 20px 0;
   font-size: 12px;
   border-collapse: collapse;
+
   th, td{
     padding: 0.5em;
     border: 1px solid #ddd;
   }
+
   .number{
     text-align: right;
   }
-  td{
-  }
+
   caption{
     text-align: left;
   }
 }
 
 th,td{
+
   &.column-deducting,
   &.column-vat,
   &.column-tax,

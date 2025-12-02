@@ -1,9 +1,5 @@
 {
 	"name": "sharee",
-	"main": "gulpfile.js",
-	"engines": {
-		"node": ">=14.x"
-	},
 	"scripts": {
 		"start": "wp-env start",
 		"stop": "wp-env stop",
@@ -12,12 +8,34 @@
 		"env": "wp-env",
 		"cli": "wp-env run cli wp",
 		"test": "RESULT=${PWD##*/} && wp-env run tests-cli ./wp-content/plugins/$RESULT/vendor/bin/phpunit -c ./wp-content/plugins/$RESULT/phpunit.xml",
-		"watch": "gulp watch",
-		"package": "gulp build",
-		"gulp": "gulp",
-		"gulp:task": "gulp --task",
-		"fix": "eslint --fix src/js",
-		"lint": "gulp eslint"
+		"build": "npm run copy && npm run build:css && npm run build:js && npm run dump",
+		"copy": "cp node_modules/select2/dist/js/select2.min.js node_modules/select2/dist/css/select2.min.css node_modules/select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css assets/vendor/",
+		"build:js": "grab-deps js src/js assets/js js",
+		"build:css": "sass ./src/scss/:./assets/css/ --style=compressed && postcss ./assets/css/*.css --replace",
+		"dump": "grab-deps dump assets",
+		"lint": "npm run lint:css && npm run lint:js",
+		"lint:js": "wp-scripts lint-js 'src/js/**/*.js' --resolve-plugins-relative-to .",
+		"lint:css": "wp-scripts lint-style 'src/**/*.scss'",
+		"fix:js": "eslint --fix src/js",
+		"fix:css": "stylelint --fix 'src/**/*.scss'",
+		"watch": "npm-watch"
+	},
+	"watch": {
+		"build:js": {
+			"patterns": [
+				"src/js"
+			],
+			"extensions": "js"
+		},
+		"build:css": {
+			"patterns": [
+				"src/scss"
+			],
+			"extensions": "scss"
+		}
+	},
+	"engines": {
+		"node": ">=20.x"
 	},
 	"repository": {
 		"type": "git",
@@ -33,41 +51,17 @@
 	},
 	"homepage": "https://github.com/hametuha/sharee#readme",
 	"devDependencies": {
-		"@wordpress/env": "^9.0.0",
-		"babel-core": "^6.26.0",
-		"babel-eslint": "^8.2.6",
-		"babel-preset-env": "^1.7.0",
-		"babel-preset-es2015": "^6.24.1",
-		"eslint": "^5.4.0",
-		"eslint-config-wordpress": "^2.0.0",
-		"event-stream": "^3.3.2",
-		"gulp": "^4.0.2",
-		"gulp-autoprefixer": "^5.0.0",
-		"gulp-babel": "^7.0.0",
-		"gulp-concat": "^2.6.0",
-		"gulp-eslint": "^5.0.0",
-		"gulp-filter": "^5.1",
-		"gulp-imagemin": "^4.1",
-		"gulp-jshint": "^2.0",
-		"gulp-load-plugins": "^1.2",
-		"gulp-notify": "^3.2.0",
-		"gulp-pleeease": "^2.0",
-		"gulp-plumber": "^1.0.0",
-		"gulp-sass": "^4.0",
-		"gulp-sass-bulk-import": "^1.0",
-		"gulp-sourcemaps": "^2.6",
-		"gulp-uglify": "^3.0",
-		"gulp-util": "^3.0",
-		"html5shiv": "^3.7.3",
-		"imagemin-pngquant": "^6.0",
-		"jshint": "^2.13.6",
-		"jshint-stylish": "^2.0",
-		"lodash": "^4.2.1",
-		"popper.js": "^1.14.4",
-		"select2": "^4.0.6-rc.1",
-		"select2-bootstrap4-theme": "^1.0.0"
+		"@kunoichi/grab-deps": "^3.0.0",
+		"@wordpress/env": "^10.0.0",
+		"@wordpress/scripts": "^30.0.0",
+		"npm-watch": "^0.13.0",
+		"postcss": "^8.5.0",
+		"postcss-cli": "^11.0.0",
+		"sass": "^1.86.0",
+		"select2": "^4.1.0-rc.0",
+		"select2-bootstrap-5-theme": "^1.3.0"
 	},
 	"volta": {
-		"node": "14.21.3"
+		"node": "20.18.0"
 	}
 }

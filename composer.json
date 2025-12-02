@@ -5,14 +5,19 @@
 	"license": "GPL-3.0-or-later",
 	"scripts": {
 		"test": "phpunit",
-		"lint": [
-			"vendor/bin/phpcs --standard=phpcs.ruleset.xml $(find ./app -name '*.php')"
+		"lint": "phpcs --standard=phpcs.ruleset.xml $(find ./app -name '*.php')",
+		"fix": "phpcbf --standard=phpcs.ruleset.xml $(find ./app -name '*.php')",
+		"i18n:pot": "vendor/bin/wp i18n make-pot ./ languages/sharee.pot --exclude=src --domain=sharee",
+		"i18n:po": "vendor/bin/wp i18n update-po languages/sharee.pot languages",
+		"i18n:mo": "vendor/bin/wp i18n make-mo languages",
+		"i18n:json": "vendor/bin/wp i18n make-json languages languages --no-purge",
+		"i18n:update": [
+			"@i18n:pot",
+			"@i18n:po"
 		],
-		"fix": [
-			"vendor/bin/phpcbf --standard=phpcs.ruleset.xml $(find ./app -name '*.php')"
-		],
-		"csv": [
-			"vendor/bin/phpcs --standard=phpcs.ruleset.xml --report=csv $(find ./app -name '*.php') | column -s, -t"
+		"i18n:compile": [
+			"@i18n:mo",
+			"@i18n:json"
 		]
 	},
 	"authors": [
@@ -23,16 +28,16 @@
 	],
 	"minimum-stability": "stable",
 	"require": {
-		"php": ">=7.2",
+		"php": ">=8.2",
 		"hametuha/pattern": "^1.0"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "~5.7|^6|^7",
+		"phpunit/phpunit": "^9",
 		"wp-coding-standards/wpcs": "~3.0",
-		"yoast/phpunit-polyfills": "^1.0",
-		"hametuha/hashboard": "^0.9.1",
-		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
-		"fakerphp/faker": "^1.20.0"
+		"yoast/phpunit-polyfills": "^4.0",
+		"hametuha/hashboard": "^1.0.0",
+		"fakerphp/faker": "^1.20.0",
+		"wp-cli/i18n-command": "^2.6"
 	},
 	"autoload": {
 		"psr-0": {

@@ -49,7 +49,7 @@ class BillingList extends TableScreen {
 		if ( 'users_page_user-billing' !== $page ) {
 			return;
 		}
-		wp_enqueue_script( 'sharee-billing-helper', Sharee::get_instance()->root_url . '/assets/js/billing-list-helper.js', [ 'jquery' ], Sharee::VERSION, true );
+		wp_enqueue_script( 'sharee-billing-helper' );
 		wp_localize_script(
 			'sharee-billing-helper',
 			'ShareeBilling',

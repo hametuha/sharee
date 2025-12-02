@@ -1,35 +1,50 @@
-#, fuzzy
+# Copyright (C) 2025 Hametuha INC.
+# This file is distributed under the GPLv3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sharee\n"
-"POT-Creation-Date: 2025-02-12 08:48+0900\n"
-"PO-Revision-Date: 2017-01-19 18:39+0900\n"
-"Last-Translator: Takahashi Fumiki <takahashi.fumiki@hametuha.co.jp>\n"
-"Language-Team: Hametuha INC. <takahashi.fumiki@hametuha.co.jp>\n"
-"Language: en_US\n"
+"Project-Id-Version: Sharēe nightly\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sharee\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
-"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: node_modules\n"
-"X-Poedit-SearchPathExcluded-1: vendor\n"
-"X-Poedit-SearchPathExcluded-2: src\n"
-"X-Poedit-SearchPathExcluded-3: tests\n"
-"X-Poedit-SearchPathExcluded-4: wordpress\n"
+"POT-Creation-Date: 2025-12-02T13:17:20+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: sharee\n"
 
-#: app/Hametuha/Sharee/Hooks/AdditionalUserQuery.php:151
+#. Plugin Name of the plugin
+#: sharee.php
+msgid "Sharēe"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: sharee.php
+msgid "https://github.com/hametuha/sharee"
+msgstr ""
+
+#. Description of the plugin
+#: sharee.php
+msgid "User reward manager for WordPress"
+msgstr ""
+
+#. Author of the plugin
+#: sharee.php
+msgid "Hametuha INC."
+msgstr ""
+
+#. Author URI of the plugin
+#: sharee.php
+msgid "https://hametuha.co.jp"
+msgstr ""
+
+#: app/Hametuha/Sharee/Hooks/AdditionalUserQuery.php:153
 msgctxt "paid-period"
 msgid "Paid since"
 msgstr ""
 
-#: app/Hametuha/Sharee/Hooks/AdditionalUserQuery.php:154
+#: app/Hametuha/Sharee/Hooks/AdditionalUserQuery.php:156
 msgctxt "paid-period"
 msgid "Until"
 msgstr ""
@@ -39,8 +54,7 @@ msgid "Billing"
 msgstr ""
 
 #: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:54
-msgid ""
-"This is your billing information. To get rewarded, please fill up all forms."
+msgid "This is your billing information. To get rewarded, please fill up all forms."
 msgstr ""
 
 #: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:84
@@ -66,9 +80,7 @@ msgid "Save"
 msgstr ""
 
 #: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:165
-msgid ""
-"Type and search your bank. Bank code will be automatically input if you "
-"found your bank."
+msgid "Type and search your bank. Bank code will be automatically input if you found your bank."
 msgstr ""
 
 #: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:181
@@ -175,6 +187,7 @@ msgstr ""
 msgid "Zip Code"
 msgstr ""
 
+#. translators: %s is variable.
 #: app/Hametuha/Sharee/Master/Address.php:45
 #, php-format
 msgid "Invalid format: %s Only number and hyphen is available."
@@ -211,6 +224,7 @@ msgstr ""
 msgid "Undefined"
 msgstr ""
 
+#. translators: %1$s is old status, %2$s is new status.
 #: app/Hametuha/Sharee/Models/RevenueModel.php:274
 #, php-format
 msgid "Status changed %1$s to %2$s."
@@ -248,12 +262,6 @@ msgstr ""
 msgid "Something is wrong on server. Please try again later."
 msgstr ""
 
-#: app/Hametuha/Sharee/Screen/BillingList.php:61
-#: app/Hametuha/Sharee/Screen/BillingList.php:155
-#, php-format
-msgid "Please specify transfer date in 4 digits: e.g. %s"
-msgstr ""
-
 #: app/Hametuha/Sharee/Screen/BillingList.php:72
 #: app/Hametuha/Sharee/Screen/BillingList.php:122
 msgid "Invalid Access"
@@ -264,21 +272,22 @@ msgstr ""
 msgid "No billing found."
 msgstr ""
 
+#. translators: %s indicates amount of records, %d is number of records.
 #: app/Hametuha/Sharee/Screen/BillingList.php:103
 #, php-format
 msgid "%s fixed. Reload window."
 msgstr ""
 
-#: app/Hametuha/Sharee/Screen/BillingList.php:103
-#, php-format
-msgid "%d record is"
-msgid_plural "%d records are"
-msgstr[0] ""
-msgstr[1] ""
-
+#. translators: %1$s is year, %2$s is month.
 #: app/Hametuha/Sharee/Screen/BillingList.php:133
 #, php-format
 msgid "Please specify year and month. %1$s-%2$s"
+msgstr ""
+
+#. translators: %s is digit example.
+#: app/Hametuha/Sharee/Screen/BillingList.php:155
+#, php-format
+msgid "Please specify transfer date in 4 digits: e.g. %s"
 msgstr ""
 
 #: app/Hametuha/Sharee/Screen/BillingList.php:214
@@ -337,11 +346,6 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
-#: app/Hametuha/Sharee/Table/BillingListTable.php:61
-#: app/Hametuha/Sharee/Table/PaymentListTable.php:44
-msgid "User"
-msgstr ""
-
 #: app/Hametuha/Sharee/Table/BillingListTable.php:64
 msgid "Transfer Amount"
 msgstr ""
@@ -357,6 +361,10 @@ msgstr ""
 #: app/Hametuha/Sharee/Table/BillingListTable.php:136
 #: app/Hametuha/Sharee/Table/RewardListTable.php:109
 msgid "Deleted User"
+msgstr ""
+
+#: app/Hametuha/Sharee/Table/PaymentListTable.php:44
+msgid "User"
 msgstr ""
 
 #: app/Hametuha/Sharee/Table/PaymentListTable.php:47
@@ -397,6 +405,7 @@ msgstr ""
 msgid "Every Year"
 msgstr ""
 
+#. translators: %04d is year.
 #: app/Hametuha/Sharee/Utilities/TableHelper.php:64
 #, php-format
 msgctxt "year"

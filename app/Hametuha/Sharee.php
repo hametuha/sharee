@@ -2,7 +2,7 @@
 namespace Hametuha;
 
 
-use Hametuha\Pattern\Singleton;
+use Hametuha\SingletonPattern\Singleton;
 use Hametuha\Sharee\Command;
 
 /**
@@ -19,8 +19,9 @@ class Sharee extends Singleton {
 	/**
 	 * Executed in constructor
 	 */
-	protected function init() {
+	protected function init():void {
 		add_action( 'init', [ $this, 'load_text_domain' ], 1 );
+		add_action( 'init', [ $this, 'register_assets' ] );
 		// Register global assets
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 		// Register autoloader
@@ -37,13 +38,16 @@ class Sharee extends Singleton {
 	/**
 	 * Load all files.
 	 */
-	public function after_setup_theme() {
-		// Load all files.
+	public function after_setup_theme():void {
+		// Make list of inactive classes.
 		$default_off = [];
 		if ( ! self::should_enable( 'billing' ) ) {
 			$default_off[] = 'BillingList';
 			$default_off[] = 'HbAccountScreen';
+		} elseif ( ! class_exists( 'Hametuha\Hashboard' ) ) {
+			$default_off[] = 'HbAccountScreen';
 		}
+		// Load all files.
 		$dirs = [
 			'Hooks'  => false,
 			'Models' => false,
@@ -76,24 +80,57 @@ class Sharee extends Singleton {
 		}
 	}
 
-
-
 	/**
 	 * Load text domain
 	 *
 	 * @return bool
 	 */
-	public function load_text_domain() {
+	public function load_text_domain():bool {
 		$mo = sprintf( 'sharee-%s.mo', get_user_locale() );
 		return load_textdomain( 'sharee', $this->root_dir . '/languages/' . $mo );
+	}
+
+	/**
+	 * Register assets.
+	 *
+	 * @return void
+	 */
+	public function register_assets():void {
+		$json = $this->root_dir . '/wp-dependencies.json';
+		if ( ! file_exists( $json ) ) {
+			return;
+		}
+		$deps = json_decode( file_get_contents( $json ), true );
+		if ( empty( $deps ) ) {
+			return;
+		}
+		foreach ( $deps as $dep ) {
+			if ( empty( $dep['path'] ) ) {
+				continue;
+			}
+			$src = $this->root_url . '/' . $dep['path'];
+			switch ( $dep['ext'] ) {
+				case 'js':
+					$footer = [
+						'in_footer' => $dep['footer'],
+					];
+					if ( in_array( $dep['strategy'], [ 'async', 'defer' ], true ) ) {
+						$footer['strategy'] = $dep['strategy'];
+					}
+					wp_register_script( $dep['handle'], $src, $dep['deps'], $dep['hash'], $footer );
+					break;
+				case 'css':
+					wp_register_style( $dep['handle'], $src, $dep['deps'], $dep['hash'], $dep['media'] );
+					break;
+			}
+		}
 	}
 
 	/**
 	 * Load admin global assets.
 	 */
 	public function admin_enqueue_scripts() {
-		$path = '/assets/css/admin.css';
-		wp_enqueue_style( 'sharee-admin-style', $this->root_url . $path, [], md5_file( $this->root_dir . $path ) );
+		wp_enqueue_style( 'sharee-admin-style' );
 	}
 
 	/**
