@@ -1,9 +1,21 @@
 {
-  "parserOptions": {
-    "ecmaVersion": 6
-  },
-  "env": {
-    "browser": true
-  },
-  "extends": "wordpress"
+	"parserOptions": {
+		"ecmaVersion": 6
+	},
+	"env": {
+		"browser": true,
+		"jquery": true
+	},
+	"globals": {
+		"wp": false,
+		"hb": false
+	},
+	"extends": [
+		"plugin:@wordpress/eslint-plugin/recommended-with-formatting"
+	],
+	"rules": {
+		"no-alert": "off",
+		"no-console": "warn",
+		"@wordpress/no-unused-vars-before-return": "off"
+	}
 }

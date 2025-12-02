@@ -1,6 +1,6 @@
 {
 	"core": null,
-	"phpVersion": "7.4",
+	"phpVersion": "8.2",
 	"plugins": [
 		".",
 		"https://downloads.wordpress.org/plugin/query-monitor.latest-stable.zip",

@@ -1,4 +1,4 @@
-# Sharē
+# Sharēe
 
 WordPress library for Reward manager.
 
@@ -23,8 +23,8 @@ Reward list on WordPress Dashboard.
 
 ### Payment List
 
-Payment list is a expected payment list for user's reward.
-Works fine with hashboard.
+Payment list is an expected payment list for user's reward.
+Works fine with [hametuha/hashboard](https://packagist.org/packages/hametuha/hashboard).
 
 ```php
 /**
@@ -46,11 +46,12 @@ add_filter( 'sharee_should_enable', function( $enabled, $service ) {
 ## API
 
 Sharee has no screen to add reward record.
-You have to enter one manually.
+Some lines of code are required.
 
 ### Add Record
 
 ```php
+// Add revenue.
 $result = RevenueModel::get_instance()->add_revenue( 'kdp', $user_id, $price, [
 	'unit'        => $unit,
 	'total'       => $total,
@@ -67,12 +68,13 @@ if ( $result && ! is_wp_error( $result ) ) {
 
 There are 2 additional query vars for user query.
 
-- `paid_since`: Filter users who has been paid since the date.
-- `paid_until`: Filter users who has been paid until the date.
+- `paid_since`: Filter users who have been paid since the date.
+- `paid_until`: Filter users who have been paid until the date.
 
 This works with `WP_User_Query`.
 
 ```php
+// get users who got paid between Year 2018.
 $query = new WP_User_Query( [
 	'role'        => 'subscriber',
 	'paid_since'  => '2018-01-01',

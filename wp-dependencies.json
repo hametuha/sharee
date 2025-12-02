@@ -1,0 +1,73 @@
+[
+	{
+		"handle": "select2.min",
+		"path": "assets/vendor/select2.min.js",
+		"ext": "js",
+		"hash": "7c98b05dd4f3d7c693eb34690737f0d8",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "select2.min",
+		"path": "assets/vendor/select2.min.css",
+		"ext": "css",
+		"hash": "e71c39430469a3eea74514a2b48f6536",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "select2-bootstrap-5-theme.min",
+		"path": "assets/vendor/select2-bootstrap-5-theme.min.css",
+		"ext": "css",
+		"hash": "3caedafd8e52dca668b4620ba7320045",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "sharee-billing-list-helper",
+		"path": "assets/js/billing-list-helper.js",
+		"ext": "js",
+		"hash": "f449e48417bad50ca3e06428a2e4e8cf",
+		"version": "0.0.0",
+		"deps": [
+			"jquery"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "sharee-bank-helper",
+		"path": "assets/js/bank-helper.js",
+		"ext": "js",
+		"hash": "3f195a9eb46a6e12455e87edf9238ade",
+		"version": "0.0.0",
+		"deps": [
+			"jquery",
+			"select2"
+		],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	},
+	{
+		"handle": "admin",
+		"path": "assets/css/admin.css",
+		"ext": "css",
+		"hash": "8baf5c522ad5fb686a1c5d6edf478dfd",
+		"version": "0.0.0",
+		"deps": [],
+		"footer": true,
+		"media": "all",
+		"strategy": ""
+	}
+]

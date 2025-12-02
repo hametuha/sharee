@@ -8,7 +8,6 @@ use Hametuha\Sharee\Models\RevenueModel;
  * Table helper
  *
  * @package sharee
- * @method int get_pagenume()
  */
 trait TableHelper {
 

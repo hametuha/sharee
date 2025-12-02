@@ -1,0 +1,29 @@
+name: Release Library
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    name: Build and Upload Release Asset
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://packagist.org/packages/hametuha/sharee
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build package
+        run: bash bin/build.sh
+
+      - name: Create Zip
+        run: zip -r ${{ github.event.repository.name }}.zip ./
+
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ github.event.repository.name }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,6 @@
+/*!
+ * Bank helper with select2
+ *
+ * @handle sharee-bank-helper
+ * @deps jquery, select2
+ */

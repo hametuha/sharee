@@ -24,7 +24,7 @@ class HbAccountScreen extends Singleton {
 		add_filter( 'hashboard_page_description', [ $this, 'billing_description' ], 10, 3 );
 		add_action( 'hashboard_before_fields_rendered', [ $this, 'render_status_fields' ], 10, 3 );
 		add_filter( 'hashboard_field_groups', [ $this, 'field_groups' ], 10, 4 );
-		add_action( 'hashboard_enqueue_scripts', [ $this, 'enqueue_scripts' ], 10, 2 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ], 10, 2 );
 	}
 
 	/**
@@ -59,11 +59,9 @@ class HbAccountScreen extends Singleton {
 	/**
 	 * Enqueue scripts
 	 *
-	 * @param \Hametuha\Hashboard\Pattern\Screen $screen
-	 * @param string $child
 	 */
-	public function enqueue_scripts( $screen = null, $child = '' ) {
-		if ( ! ( $screen && 'account' === $screen->slug() && 'billing' === $child ) ) {
+	public function enqueue_scripts( $screen = null, $child = '' ): void {
+		if ( ! Hashboard::is_page( 'account' ) ) {
 			return;
 		}
 
@@ -71,10 +69,10 @@ class HbAccountScreen extends Singleton {
 		$yolp_key = defined( 'YOLP_API_KEY' ) ? YOLP_API_KEY : '';
 
 		$base_url = Sharee::get_instance()->root_url;
-		wp_register_style( 'select2', $base_url . '/assets/css/select2.min.css', [], '4.0.6' );
-		wp_enqueue_style( 'select2', $base_url . '/assets/css/select2-bootstrap4.min.css', [ 'bootstrap-css', 'select2' ], '1.0.0' );
-		wp_register_script( 'select2', $base_url . '/assets/js/select2.min.js', [ 'jquery' ], '4.0.6', true );
-		wp_enqueue_script( 'sharee-bank-helper', $base_url . '/assets/js/bank-helper.js', [ 'select2' ], '1.0.0', true );
+		wp_register_style( 'select2', $base_url . '/assets/vendor/select2.min.css', [], '4.1.0' );
+		wp_enqueue_style( 'select2-bootstrap-5-theme', $base_url . '/assets/vendor/select2-bootstrap-5-theme.min.css', [ 'select2' ], '1.3.0' );
+		wp_register_script( 'select2', $base_url . '/assets/vendor/select2.min.js', [ 'jquery' ], '4.1.0', true );
+		wp_enqueue_script( 'sharee-bank-helper' );
 		wp_localize_script(
 			'sharee-bank-helper',
 			'BankHelper',

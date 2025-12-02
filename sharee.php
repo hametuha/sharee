@@ -5,6 +5,8 @@
  * Description: User reward manager for WordPress
  * Version:     nightly
  * Author:      Hametuha INC.
+ * Requires at least: 6.6
+ * Requires PHP: 8.2
  * Author URI:  https://hametuha.co.jp
  * License:     GPLv3 or later
  * License URI: http://www.gnu.org/licenses/old-licenses/gpl-3.0.html
@@ -38,6 +40,11 @@ add_action( 'plugins_loaded', function() {
 		define( 'HASHBOARD', Hametuha\Hashboard::version() );
 	}
 } );
+
+// Load auto login if exists.
+if ( file_exists( __DIR__ . '/tests/auto-login.php' ) ) {
+	require_once __DIR__ . '/tests/auto-login.php';
+}
 
 /**
  * Add labels.

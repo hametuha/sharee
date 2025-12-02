@@ -3,7 +3,7 @@
 namespace Hametuha\Sharee\Pattern;
 
 
-use Hametuha\Pattern\RestApi;
+use Hametuha\RestPattern\RestApiBase;
 use Hametuha\Sharee\Models\RevenueMetaModel;
 use Hametuha\Sharee\Models\RevenueModel;
 
@@ -14,7 +14,7 @@ use Hametuha\Sharee\Models\RevenueModel;
  * @property-read RevenueModel     $revenue
  * @property-read RevenueMetaModel $revenue_meta
  */
-abstract class RestPattern extends RestApi {
+abstract class RestPattern extends RestApiBase {
 
 	protected $version = '1';
 
