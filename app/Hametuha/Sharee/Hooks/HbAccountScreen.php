@@ -60,7 +60,7 @@ class HbAccountScreen extends Singleton {
 	 * Enqueue scripts
 	 *
 	 */
-	public function enqueue_scripts( $screen = null, $child = '' ):void {
+	public function enqueue_scripts( $screen = null, $child = '' ): void {
 		if ( ! Hashboard::is_page( 'account' ) ) {
 			return;
 		}

@@ -35,7 +35,7 @@ jobs:
           node-version: '20'
 
       - name: Install npm packages
-        run: npm ci
+        run: npm install
 
       - name: Run JS & CSS lint
         run: npm run lint

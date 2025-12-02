@@ -19,7 +19,7 @@ class Sharee extends Singleton {
 	/**
 	 * Executed in constructor
 	 */
-	protected function init():void {
+	protected function init(): void {
 		add_action( 'init', [ $this, 'load_text_domain' ], 1 );
 		add_action( 'init', [ $this, 'register_assets' ] );
 		// Register global assets
@@ -38,7 +38,7 @@ class Sharee extends Singleton {
 	/**
 	 * Load all files.
 	 */
-	public function after_setup_theme():void {
+	public function after_setup_theme(): void {
 		// Make list of inactive classes.
 		$default_off = [];
 		if ( ! self::should_enable( 'billing' ) ) {
@@ -85,7 +85,7 @@ class Sharee extends Singleton {
 	 *
 	 * @return bool
 	 */
-	public function load_text_domain():bool {
+	public function load_text_domain(): bool {
 		$mo = sprintf( 'sharee-%s.mo', get_user_locale() );
 		return load_textdomain( 'sharee', $this->root_dir . '/languages/' . $mo );
 	}
@@ -95,7 +95,7 @@ class Sharee extends Singleton {
 	 *
 	 * @return void
 	 */
-	public function register_assets():void {
+	public function register_assets(): void {
 		$json = $this->root_dir . '/wp-dependencies.json';
 		if ( ! file_exists( $json ) ) {
 			return;
