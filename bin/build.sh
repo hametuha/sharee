@@ -2,25 +2,26 @@
 
 set -e
 
-# Remove development files from release
-rm -rf ./.git
-rm -rf ./.github
-rm -rf ./.claude
-rm -rf ./bin
-rm -rf ./tests
-rm -rf ./vendor
-rm -rf ./wp
-rm -rf ./node_modules
-rm -rf ./src
-rm -f ./.gitattributes
-rm -f ./.gitignore
-rm -f ./.wp-env.json
-rm -f ./.eslintrc
-rm -f ./.stylelintrc.json
-rm -f ./.phpunit.result.cache
-rm -f ./composer.lock
-rm -f ./package.json
-rm -f ./package-lock.json
-rm -f ./phpunit.xml
-rm -f ./phpcs.ruleset.xml
-rm -f ./CLAUDE.md
+# Remove development files from release based on .distignore
+if [ ! -f .distignore ]; then
+    echo "Error: .distignore file not found"
+    exit 1
+fi
+
+# Read .distignore into array first (to avoid issues when deleting the file itself)
+targets=()
+while IFS= read -r line || [ -n "$line" ]; do
+    # Skip comments and empty lines
+    [[ "$line" =~ ^#.*$ ]] && continue
+    [[ -z "$line" ]] && continue
+    # Remove trailing slash for consistency
+    targets+=("${line%/}")
+done < .distignore
+
+# Remove each entry
+for target in "${targets[@]}"; do
+    if [ -e "$target" ]; then
+        rm -rf "$target"
+        echo "Removed: $target"
+    fi
+done
