@@ -100,7 +100,7 @@ class BillingList extends TableScreen {
 				[
 					'success' => true,
 					// translators: %s indicates amount of records, %d is number of records.
-					'message' => sprintf( __( '%s fixed. Reload window.', 'sharee' ), sprintf( _n( '%d record is', '%d records are', $done ), $done ) ),
+					'message' => sprintf( __( '%s fixed. Reload window.', 'sharee' ), sprintf( _n( '%d record is', '%d records are', $done, 'sharee' ), $done ) ),
 				]
 			);
 		} catch ( \Exception $e ) {

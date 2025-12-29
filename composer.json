@@ -7,7 +7,7 @@
 		"test": "phpunit",
 		"lint": "phpcs --standard=phpcs.ruleset.xml $(find ./app -name '*.php')",
 		"fix": "phpcbf --standard=phpcs.ruleset.xml $(find ./app -name '*.php')",
-		"i18n:pot": "vendor/bin/wp i18n make-pot ./ languages/sharee.pot --exclude=src --domain=sharee",
+		"i18n:pot": "vendor/bin/wp i18n make-pot ./ languages/sharee.pot --exclude=src,wordpress --domain=sharee",
 		"i18n:po": "vendor/bin/wp i18n update-po languages/sharee.pot languages",
 		"i18n:mo": "vendor/bin/wp i18n make-mo languages",
 		"i18n:json": "vendor/bin/wp i18n make-json languages languages --no-purge",
