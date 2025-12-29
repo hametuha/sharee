@@ -49,9 +49,9 @@ class BillingList extends TableScreen {
 		if ( 'users_page_user-billing' !== $page ) {
 			return;
 		}
-		wp_enqueue_script( 'sharee-billing-helper' );
+		wp_enqueue_script( 'sharee-billing-list-helper' );
 		wp_localize_script(
-			'sharee-billing-helper',
+			'sharee-billing-list-helper',
 			'ShareeBilling',
 			[
 				'endpoint'     => admin_url( 'admin-ajax.php' ),
