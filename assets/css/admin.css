@@ -1,3 +1,7 @@
-.label-default{color:#d3d3d3}.label-warning{color:orange}.label-success{color:green}.sharee-summary-table{margin:20px 0;font-size:12px;border-collapse:collapse}.sharee-summary-table th,.sharee-summary-table td{padding:.5em;border:1px solid #ddd}.sharee-summary-table .number{text-align:right}.sharee-summary-table caption{text-align:left}th.column-deducting,th.column-vat,th.column-tax,th.column-total,td.column-deducting,td.column-vat,td.column-tax,td.column-total{text-align:right}
+/*!
+ * Admin style
+ *
+ * @handle sharee-admin-style
+ */.label-default{color:#d3d3d3}.label-warning{color:orange}.label-success{color:green}.sharee-summary-table{margin:20px 0;font-size:12px;border-collapse:collapse}.sharee-summary-table th,.sharee-summary-table td{padding:.5em;border:1px solid #ddd}.sharee-summary-table .number{text-align:right}.sharee-summary-table caption{text-align:left}th.column-deducting,th.column-vat,th.column-tax,th.column-total,td.column-deducting,td.column-vat,td.column-tax,td.column-total{text-align:right}
 
-/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9zY3NzL2FkbWluLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBS0EsZUFDRSxjQUdGLGVBQ0UsYUFHRixlQUNFLFlBSUYsc0JBQ0UsY0FDQSxlQUNBLHlCQUVBLGtEQUNFLGFBQ0Esc0JBR0YsOEJBQ0UsaUJBR0YsOEJBQ0UsZ0JBTUYsZ0lBSUUiLCJmaWxlIjoiYWRtaW4uY3NzIiwic291cmNlUm9vdCI6IiJ9 */
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9zY3NzL2FkbWluLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxHQUtBLGVBQ0UsY0FHRixlQUNFLGFBR0YsZUFDRSxZQUlGLHNCQUNFLGNBQ0EsZUFDQSx5QkFFQSxrREFDRSxhQUNBLHNCQUdGLDhCQUNFLGlCQUdGLDhCQUNFLGdCQU1GLGdJQUlFIiwiZmlsZSI6ImFkbWluLmNzcyIsInNvdXJjZVJvb3QiOiIifQ== */
