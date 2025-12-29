@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sharee\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-12 08:48+0900\n"
+"PO-Revision-Date: 2025-12-30 00:21+0900\n"
 "Last-Translator: Takahashi Fumiki <takahashi.fumiki@hametuha.co.jp>\n"
 "Language-Team: Hametuha INC. <takahashi.fumiki@hametuha.co.jp>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-12 08:48+0900\n"
-"PO-Revision-Date: 2025-02-12 08:48+0900\n"
-"Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
@@ -39,89 +39,89 @@ msgstr "支払い"
 msgid "This is your billing information. To get rewarded, please fill up all forms."
 msgstr "これはあなたの支払い情報です。報酬を受け取れるようフォームに入力してください。"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:84
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:82
 msgid "Sorry, but no result found."
 msgstr "申し訳ございません、該当する情報は見つかりませんでした。"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:85
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:83
 msgid "Bank is not specified."
 msgstr "銀行が指定されていません。"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:136
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:134
 #: app/Hametuha/Sharee/Table/BillingListTable.php:62
 msgid "Bank Account"
 msgstr "銀行口座"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:137
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:135
 msgid "Bank account is required to be rewarded. Only available for Japan."
 msgstr "銀行口座は報酬を受け取るために必要です。日本国内のみ利用できます。"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:138
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:236
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:136
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:234
 msgid "Save"
 msgstr "保存"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:165
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:163
 msgid "Type and search your bank. Bank code will be automatically input if you found your bank."
 msgstr "入力して銀行を検索してください。銀行を見つけたのち、銀行コードは自動で入力されます。"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:181
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:179
 msgid "Once you select a bank, you can search it's branches."
 msgstr "銀行を選択すると支店を検索することができます。"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:193
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:191
 #: app/Hametuha/Sharee/Master/Account.php:85
 msgctxt "bank_type"
 msgid "Saving"
 msgstr "普通"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:194
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:192
 #: app/Hametuha/Sharee/Master/Account.php:79
 msgctxt "bank_type"
 msgid "Checking"
 msgstr "当座"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:195
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:193
 #: app/Hametuha/Sharee/Master/Account.php:82
 msgctxt "bank_type"
 msgid "Deposite"
 msgstr "貯蓄"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:207
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:205
 #: app/Hametuha/Sharee/Master/Account.php:60
 msgid "Account Name"
 msgstr "口座名義"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:208
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:206
 msgid "Please write your name in Katakana."
 msgstr "カタカナで名義を記入してください。"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:234
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:232
 msgid "Billing Information"
 msgstr "支払い情報"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:235
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:233
 msgid "This information is required to send reward to you."
 msgstr "この情報は支払いを送るために必要です。"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:253
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:251
 msgid "e.g. John Doe"
 msgstr "例・山田太郎"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:262
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:260
 msgctxt "tax-number-detail"
 msgid "If you have a valid tax number, please input."
 msgstr "インボイス制度に対応した登録番号をお持ちの方は入力してください。"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:265
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:263
 msgid "e.g. Minami Aoyama 2-11-13, Minatoku Tokyo"
 msgstr "例・東京都港区南青山2-11-13"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:270
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:268
 msgid "e.g. Minami Aoyama Bld. 4F"
 msgstr "例・南青山ビル4F"
 
-#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:285
+#: app/Hametuha/Sharee/Hooks/HbAccountScreen.php:283
 msgid "Enter address from zip code."
 msgstr "郵便番号から住所を入力します。"
 
@@ -383,46 +383,53 @@ msgstr "削除済み"
 msgid "All Status"
 msgstr "すべてのステータス"
 
-#: app/Hametuha/Sharee/Utilities/TableHelper.php:58
+#: app/Hametuha/Sharee/Utilities/TableHelper.php:57
 msgid "Every Year"
 msgstr "すべての年"
 
 #. translators: %04d is year.
-#: app/Hametuha/Sharee/Utilities/TableHelper.php:64
+#: app/Hametuha/Sharee/Utilities/TableHelper.php:63
 #, php-format
 msgctxt "year"
 msgid "%04d"
 msgstr "%04d年"
 
-#: app/Hametuha/Sharee/Utilities/TableHelper.php:72
+#: app/Hametuha/Sharee/Utilities/TableHelper.php:71
 msgid "Every Months"
 msgstr "すべての月"
 
-#: app/Hametuha/Sharee/Utilities/TableHelper.php:80
+#: app/Hametuha/Sharee/Utilities/TableHelper.php:79
 msgid "Filter"
 msgstr "フィルター"
 
 #. Plugin Name of the plugin
 #: sharee.php
 msgid "Sharēe"
-msgstr ""
+msgstr "Sharēe"
 
 #. Plugin URI of the plugin
 #: sharee.php
 msgid "https://github.com/hametuha/sharee"
-msgstr ""
+msgstr "https://github.com/hametuha/sharee"
 
 #. Description of the plugin
 #: sharee.php
 msgid "User reward manager for WordPress"
-msgstr ""
+msgstr "WordPressのユーザー報酬管理プラグイン"
 
 #. Author of the plugin
 #: sharee.php
 msgid "Hametuha INC."
-msgstr ""
+msgstr "株式会社破滅派"
 
 #. Author URI of the plugin
 #: sharee.php
 msgid "https://hametuha.co.jp"
-msgstr ""
+msgstr "https://hametuha.co.jp"
+
+#. translators: %s indicates amount of records, %d is number of records.
+#: app/Hametuha/Sharee/Screen/BillingList.php:103
+#, php-format
+msgid "%d record is"
+msgid_plural "%d records are"
+msgstr[0] "%d件が"
