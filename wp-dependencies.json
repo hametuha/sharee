@@ -49,7 +49,7 @@
 		"handle": "sharee-bank-helper",
 		"path": "assets/js/bank-helper.js",
 		"ext": "js",
-		"hash": "3f195a9eb46a6e12455e87edf9238ade",
+		"hash": "92c91228ecf4a59902e661491efa629e",
 		"version": "0.0.0",
 		"deps": [
 			"jquery",
@@ -60,10 +60,10 @@
 		"strategy": ""
 	},
 	{
-		"handle": "admin",
+		"handle": "sharee-admin-style",
 		"path": "assets/css/admin.css",
 		"ext": "css",
-		"hash": "8baf5c522ad5fb686a1c5d6edf478dfd",
+		"hash": "eecf00f96856725d6dfc03014008ca32",
 		"version": "0.0.0",
 		"deps": [],
 		"footer": true,

@@ -1,0 +1,28 @@
+# Development directories
+.git/
+.github/
+.claude/
+bin/
+tests/
+node_modules/
+src/
+wp/
+wordpress/
+
+# Development files
+.browserslistrc
+.editorconfig
+.eslintrc
+.stylelintrc.json
+.gitattributes
+.gitignore
+.wp-env.json
+.phpunit.result.cache
+.distignore
+CLAUDE.md
+composer.lock
+gulpfile.js
+package.json
+package-lock.json
+phpunit.xml
+phpcs.ruleset.xml

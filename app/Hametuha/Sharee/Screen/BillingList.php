@@ -49,9 +49,9 @@ class BillingList extends TableScreen {
 		if ( 'users_page_user-billing' !== $page ) {
 			return;
 		}
-		wp_enqueue_script( 'sharee-billing-helper' );
+		wp_enqueue_script( 'sharee-billing-list-helper' );
 		wp_localize_script(
-			'sharee-billing-helper',
+			'sharee-billing-list-helper',
 			'ShareeBilling',
 			[
 				'endpoint'     => admin_url( 'admin-ajax.php' ),
@@ -100,7 +100,7 @@ class BillingList extends TableScreen {
 				[
 					'success' => true,
 					// translators: %s indicates amount of records, %d is number of records.
-					'message' => sprintf( __( '%s fixed. Reload window.', 'sharee' ), sprintf( _n( '%d record is', '%d records are', $done ), $done ) ),
+					'message' => sprintf( __( '%s fixed. Reload window.', 'sharee' ), sprintf( _n( '%d record is', '%d records are', $done, 'sharee' ), $done ) ),
 				]
 			);
 		} catch ( \Exception $e ) {

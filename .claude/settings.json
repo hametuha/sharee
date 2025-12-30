@@ -1,0 +1,12 @@
+{
+	"permissions": {
+		"allow": [
+			"Bash(volta run npm start:*)",
+			"mcp__chrome-devtools__list_console_messages",
+			"Bash(composer i18n:update:*)",
+			"Bash(composer i18n:compile:*)"
+		],
+		"deny": [],
+		"ask": []
+	}
+}
