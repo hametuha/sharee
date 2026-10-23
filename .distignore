@@ -16,6 +16,7 @@ wordpress/
 .stylelintrc.json
 .gitattributes
 .gitignore
+.node-version
 .wp-env.json
 .phpunit.result.cache
 .distignore
